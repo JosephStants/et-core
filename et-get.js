@@ -5,7 +5,8 @@
         delete inputWidgetObject['executethis'];// ** added by Saurabh 11/9
 
         proxyprinttodiv('Function getwid in : inputWidgetObject',  inputWidgetObject,1);
-        var outobject = {};
+        var outobject = {"etstatus":"empty"};
+
 
         // getfrommongo(inputWidgetObject, function(results) {
         //     if (results) {
@@ -21,7 +22,7 @@
         //     }
         // });
         var results = executethis(inputWidgetObject,getfrommongo);
-        if (results) {
+        if (results && results["etstatus"]!="empty") {
             if (results["data"]) { outobject = results["data"]; }
 
             if (results['wid']) { outobject['wid'] = results['wid']; }
