@@ -52,9 +52,7 @@
         return securityCheckOutput;
     }// End of querywid function
 
-
-
-    function aggressivedto(widInput, preamble, level) { // returns a made up dto base on maximum number of relationships, etc
+    exports.aggressivedto = aggressivedto = function aggressivedto(widInput, preamble, level) { // returns a made up dto base on maximum number of relationships, etc
         //Debug='true';
         proxyprinttodiv('Function aggressivedto()  widInput' , widInput,20);
         proxyprinttodiv('Function aggressivedto()  preamble' , preamble,20);

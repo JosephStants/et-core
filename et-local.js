@@ -208,7 +208,8 @@ function getFromLocalStorage(key){
 function addToLocalStorage(key, value){
 	localStorage.setItem(key, JSON.stringify(value));
 }
-function clearLocalStorage(){
+
+exports.clearLocalStorage = clearLocalStorage = function clearLocalStorage(){
 	widMasterKey = "widmaster_";
 	localStorage.clear();
 	potentialwid = 0;

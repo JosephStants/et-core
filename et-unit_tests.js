@@ -3,22 +3,20 @@
 // at stands for 'all tests', this will run a suite 
 // of tests that are known to pass
 exports.at = at = function at(params, callback) {
-	var result=[];
-	result.push(tt());
-	// result.push(fail());
-	result.push(astt());
-	result.push(ctt());
-	result.push(alphatt());
+	bootprocess();
 
-	// rt1();
-	// var all_test_result = "PASS";
-	// for (r in result) {
-	// 	if (result[r]['resultwid'] != "PASS") {
-	// 		all_test_result = "FAIL";
-	// 	}
-	// }
-	// var x = {'resultwid':all_test_result, 'testresults':test_results};
-
+	// var result=[];
+	// result.push(tt());
+	// // result.push(fail());
+	// result.push(astt());
+	// result.push(ctt());
+	// result.push(alphatt());
+	// 
+	var result={};
+	result = jsonConcat(result, tt());
+	result = jsonConcat(result, astt());
+	result = jsonConcat(result, ctt());
+	result = jsonConcat(result, alphatt());
 	
     if (callback instanceof Function) { 
     	callback(result); 
