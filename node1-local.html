@@ -230,13 +230,17 @@ $('#execute_function').click(function() {
 		showPassFail(y) 
 	};
 
-	var x = getfromlocal({"wid":"test_results"});
-	console.log('x=' + JSON.stringify(x));
+	// var x = getfromlocal({"wid":"test_results"});
+	// console.log('x=' + JSON.stringify(x));
 	$('#Function_Output').text(JSON.stringify(result));
-	$('#resultDiv').text(JSON.stringify(x));
+	// $('#resultDiv').text(JSON.stringify(x));
 
-	displayAllWids();
-	displaylocalStore();
+	if (exports.environment == 'local') displayAllWids();
+	if ((typeof localStore) !== "undefined") {
+		displaylocalStore();
+	} else {
+		document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
+	}
 });
 
 $('#rerun').click(function() {

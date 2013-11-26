@@ -44,9 +44,6 @@ if(typeof window === "undefined"){
   var window = global;
 };
 
-
-
-
 function bootprocess(){
 	testclearstorage();
 	if(exports.environment === 'local'){

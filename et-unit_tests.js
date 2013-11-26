@@ -5,13 +5,6 @@
 exports.at = at = function at(params, callback) {
 	bootprocess();
 
-	// var result=[];
-	// result.push(tt());
-	// // result.push(fail());
-	// result.push(astt());
-	// result.push(ctt());
-	// result.push(alphatt());
-	// 
 	var result={};
 	result = jsonConcat(result, tt());
 	result = jsonConcat(result, astt());
