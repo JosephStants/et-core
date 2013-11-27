@@ -134,12 +134,12 @@ function test4(params) {
 
 	</div>
 	<br>
-	<input class='btn btn-mini btn-info' type="button" value="getwidmaster" onclick="javascript:testgetwidmaster();" />
-	<input class='btn btn-mini btn-info' type="button" value="addwidmaster" onclick="javascript:testaddwidmaster();"/>
-	<input class='btn btn-mini btn-info' type="button" value="Converttodot" onclick="javascript:testconverttodot();" />
-	<input class='btn btn-mini btn-info' type="button" value="Converttodot" onclick="javascript:testconvertfromdot();" />
-	<input class='btn btn-mini btn-info' type="button" value="Execute This" onclick="javascript:testexecutethis() " /><br><br>
+	<input class='btn btn-mini btn-info' type="button" value="Execute This" onclick="javascript:testexecutethis() "/>
+	<input class='btn btn-mini btn-info' type="button" value="getwidmaster" onclick="javascript:testgetwidmaster()"/>
+	<input class='btn btn-mini btn-info' type="button" value="addwidmaster" onclick="javascript:testaddwidmaster()"/>
 
+	<input class='btn btn-mini btn-info' type="button" value="ConvertToDOT" onclick="javascript:testconverttodot()" style='float:right;'/>
+	<input class='btn btn-mini btn-info' type="button" value="ConvertFromDOT" onclick="javascript:testconvertfromdot()" style='float:right;'/><br><br>
 	<div class='row'>
 	    <div class="col-md-6">
 	        <span class="label label-default well_hider">Function Output</span>
@@ -272,7 +272,6 @@ function show_function_output (x) {
 	} else {
 		document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
 	}
-
 }
 
 $('#rerun').click(function() {
@@ -304,43 +303,37 @@ function showPassFail (result) {
 
 function testgetwidmaster() {
 	document.getElementById("divprint").innerHTML = "";
-	//var convertMethod = 'wid';
-	//var widParameters = {"wid":"wid1", "dtotype":"widdto", "inherit":"inherit", "convertMethod":"wid", "accessToken":"AccessToken"};
-	var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	try {
+		var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	} catch (e) {
+		console.error("JSON Parsing error:", e);
+		alert("JSON Parsing error:", e);
+		return;
+	}
 
-		widParameters["executethis"] = "getwidmaster";
-	x = window['execute']
-	var getwidresult = executethis(widParameters, x);
-	//var getwidresult = executethis(widParameters);
-	updateMemory();
-	Display_Output(getwidresult);
-
-	//printToDiv('Function testgetwidmaster getwidresult: ',  getwidresult, 'true');
+	widParameters["executethis"] = "getwidmaster";
+	var getwidresult = execute(widParameters, show_function_output);
+	// x = window['execute']
+	// var getwidresult = executethis(widParameters, x);
+	// Display_Output(getwidresult);
 }
 
 function testaddwidmaster() {
 	document.getElementById("divprint").innerHTML = "";
-	//var widParameters = input;
-	var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	try {
+		var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	} catch (e) {
+		console.error("JSON Parsing error:", e);
+		alert("JSON Parsing error:", e);
+		return;
+	}
 	
-		widParameters["executethis"] = "addwidmaster";
+	widParameters["executethis"] = "addwidmaster";
+	var getwidresult = execute(widParameters, show_function_output);
 
-	x = window['execute']
-	var getwidresult = executethis(widParameters, x);
-
-	//var getwidresult = executethis(widParameters);
-	updateMemory();
-	Display_Output(getwidresult);
-	//displayAllWids();
-	//if(widParameters["seq"]){
-	//	widMasterKey = widParameters["seq"];
-	//}	
-	// if(widParameters["seq"]){
-	// 	delete widParameters["seq"];
-	// }
-	// if(widParameters["command.action"]){
-	// 	delete widParameters["command.action"];
-	// }
+	// x = window['execute']
+	// var getwidresult = executethis(widParameters, x);
+	// Display_Output(getwidresult);
 }
 //***************************************************************
 // function testrawmongoquery() {
@@ -365,28 +358,16 @@ function testaddwidmaster() {
 // }
 //****************************************************************
 
-function testexecutethis() {
+function testexecutethis(params, Display_Output) {
 	try {
 		var widParameters = JSON.parse(document.getElementById("function_parameters").value);
 	} catch (e) {
 		console.error("JSON Parsing error:", e);
+		alert("JSON Parsing error:", e);
+		return;
 	}
-	//widParameters["executethis"] = "addwidmaster";
-
-	var getwidresult = executethis(widParameters);
-
-	//updateMemory();
-
-	Display_Output(getwidresult);
-
-
-	// document.getElementById("divprint").innerHTML = "";
-	// var data = $("#function_parameters").val().split('&&');
-	// var getwidresult = executethis(data);
-	// Display_Output(getwidresult);
+	var getwidresult = execute(widParameters, show_function_output);
 }
-
-
 
 // function testQueryWid() {
 // 	document.getElementById("divprint").innerHTML = "";
@@ -411,20 +392,22 @@ function testexecutethis() {
 function testconverttodot() {
     document.getElementById("divprint").innerHTML = "";
     var widParameters = JSON.parse(document.getElementById("function_parameters").value);
-    var getwidresult = ConvertToDOTdri(widParameters);
-    updateMemory();
+    widParameters['executethis'] = ConvertToDOTdri;
+	var getwidresult = execute(widParameters);
+
 	Display_Output(getwidresult);
     //printToDiv('Function testconverttodot convertedResults: ',  convertedResults);
-    }
+}
 
 function testconvertfromdot() {
     document.getElementById("divprint").innerHTML = "";
     var widParameters = JSON.parse(document.getElementById("convertfromdotparameters").value);
-    var getwidresult = ConvertFromDOTdri(widParameters);
-    updateMemory();
+    widParameters['executethis'] = ConvertFromDOTdri;
+	var getwidresult = execute(widParameters);
+
 	Display_Output(getwidresult);
     // printToDiv('Function testconverttodot convertedResults: ',  convertedResults);
-    }
+}
 
 function Display_Output(data) {
 	document.getElementById("Function_Output").innerHTML =  "";
@@ -497,7 +480,7 @@ exports.verifysummary_local = verifysummary_local = function verifysummary_local
 	// var resultsobject = getfromlocal({'wid': resultwid});
 	if (resultsobject !== undefined) {
 		for (var result in resultsobject) {
-			alert(result);
+			// alert(result);
 			if (resultsobject[result] == "FAIL" || resultsobject[result] != "PASS" && resultsobject[result] != {}) {
 				testfailflag='true';
 				}
