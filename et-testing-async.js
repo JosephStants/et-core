@@ -4,8 +4,8 @@ exports.widMasterKey = widMasterKey = "widmaster_";
 exports.test_results =  test_results = {};
 exports.potentialwid =  potentialwid = 0;
 
-
-if(!window){var window=global}
+(function (window) {
+// if(!window){var window=global}
 
 // if(typeof localStorage === "undefined"){
 var localStore = function(){
@@ -44,7 +44,10 @@ if(typeof window === "undefined"){
   var window = global;
 };
 
-function bootprocess(){
+
+
+
+exports.bootprocess = bootprocess = function bootprocess(){
 	testclearstorage();
 	if(exports.environment === 'local'){
 		clearLocalStorage();
@@ -112,7 +115,7 @@ exports.executetest = executetest = function executetest(myfunc, inputparameters
     proxyprinttodiv('type of fn', (myfunc instanceof Function),1);
 
     proxyprinttodiv('executeTest - inputparameters',inputparameters,99);
-    var output = executethis(inputparameters, myfunc);	// added
+    var output = window['executethis'](inputparameters, myfunc);	// added
     //var output={"a":"b"};
     proxyprinttodiv('results of executeTest =>', output, 99);
     if ((outwidname!==undefined) && (outwidname!= "")) {
@@ -194,9 +197,7 @@ exports.logverify = logverify =  function logverify(testname, resultwid, parmwid
 	addtolocal("test_results", test_results);
 					proxyprinttodiv('logverify  - resultsobject',resultsobject);
 	Debug=olddebug;
-	var temp = {};
-	temp[resultwid] = testresults;
-	return temp;
+	
 	// displayallthetestresutls(getfromlocal({'wid': resultwid}));
 	// var tempobj = getfromlocal({'wid':testname});
 	// if (tempobj === undefined) {
@@ -308,6 +309,15 @@ exports.testclearstorage = testclearstorage = function testclearstorage(){
 	localStore.clear();
 };
 
+// logic to clear things from Local storage
+exports.testclearallstorage = testclearallstorage = function testclearallstorage() {
+    widMasterKey = "widmaster_";
+    potentialwid = 0;
+    localStore.clear();
+    localStorage.clear();
+    var userstuff = { "username": "", "at": "abc7850a-7023-4046-8b5e-654e5af53c2a", "loggedin": false };
+    localStorage.setItem("driUser", JSON.stringify(userstuff));
+};
 
 // exports.addtolocal = addtolocal = function addtolocal(widName, widobject) {
 // 	addToLocalStorage((widMasterKey + widName), widobject);
@@ -331,3 +341,6 @@ exports.testclearstorage = testclearstorage = function testclearstorage(){
 // 	localStore.clear();
 // 	potentialwid = 0;
 // }
+
+
+})(typeof window == "undefined" ? global : window);

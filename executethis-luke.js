@@ -20,13 +20,8 @@
 
         if(true){
             var x = undefined;
-            
             if(incomingparams["executethis"]){
-                if (incomingparams["executethis"] instanceof Function) {
-                    x = incomingparams["executethis"];
-                } else {
-                    x = window[incomingparams["executethis"]];
-                }
+                x = window[incomingparams["executethis"]];
                 result = executethis(incomingparams, x);
             }else{
                 result = incomingparams;

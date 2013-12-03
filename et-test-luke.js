@@ -1,86 +1,5 @@
-exports.mongotest1 = mongotest1 = function mongotest1(parms, callback) { 
- 	addtomongo({'wid':'w5555','a':'b','something':'else'}, getfrommongo({'wid':'w5555'},callback(data)));
-}
 
-exports.mongotest2 = mongotest2 = function mongotest2(parms, callback) {
- 	addtomongo({'etlocal':'true', 'wid':'w5555','a':'b','something':'else'}, getfrommongo({'etlocal':'true', 'wid':'w5555'},callback(data)));
-}
-
-exports.mongotest3 = mongotest3 = function mongotest3(parms, callback) { 
- 	updatewid({'wid':'w5555','a':'b','something':'else'}, getwid({'wid':'w5555'},callback(data)));
-}
-
-exports.mongotest4 = mongotest4 = function mongotest4(parms, callback) {
- 	updatewid({'etlocal':'true', 'wid':'w5555','a':'b','something':'else'}, getwid({'etlocal':'true', 'wid':'w5555'},callback(data)));
-}
-
-exports.mongotest5 = mongotest5 = function mongotest5(parms, callback) { 
- 	execute({'executethis':'addtomongo','wid':'w5555','a':'b','something':'else'}, execute({'executethis':'getfrommongo','wid':'w5555'},callback(data)));
-}
-
-exports.mongotest6 = mongotest6 = function mongotest6(parms, callback) {
- 	execute({'executethis':'updatewid','wid':'w5555','a':'b','something':'else'}, execute({'executethis':'getwid','wid':'w5555'},callback(data)));
-}
-
-exports.mongotest7 = mongotest7 = function mongotest7(parms, callback) { 
- 	var result;
- 	result = executethis({'executethis':'addtomongo','wid':'w5555','a':'b','something':'else'}, execute);
- 	result = executethis({'executethis':'getfrommongo','wid':'w5555'},execute);
- 	if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-
-exports.mongotest8 = mongotest8 = function mongotest8(parms, callback) {
- 	result = executethis({'executethis':'updatewid','wid':'w5555','a':'b','something':'else'}, execute);
- 	result = executethis({'executethis':'getwid','wid':'w5555'},execute);
- 	 	if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-
-exports.mongotest9 = mongotest9 = function mongotest0(parms, callback) { 
- 	var result;
- 	result = executethis({'wid':'w5555','a':'b','something':'else'}, addtomongo);
- 	result = executethis({'wid':'w5555'},getfrommongo);
- 	if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-
-exports.mongotest10 = mongotest10 = function mongotest10(parms, callback) {
- 	result = executethis({'wid':'w5555','a':'b','something':'else'}, updatewid);
- 	result = executethis({'wid':'w5555'},getwid);
- 	 	if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-
-exports.mongotest11 = mongotest11 = function mongotest11(parms, callback) { 
-    var result;
-    result = executethis({'etlocal':'true', 'wid':'w5555','a':'b','something':'else'}, addtomongo);
-    result = executethis({'etlocal':'true', 'wid':'w5555'},getfrommongo);
-    if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-
-exports.mongotest12 = mongotest12 = function mongotest12(parms, callback) { 
-    var result;
-    result = executethis({'etlocal':'true', 'wid':'w5555','a':'b','something':'else'}, testquery);
-    if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-
-exports.mongotest13 = mongotest13 = function mongotest13(parms, callback) { 
-    var result;
-    result = executethis({'executethis':'testquery'}, execute);
-    if (callback instanceof Function) { callback(result); }
-     else { return result; }
-}
-// 	result={"disregard":"went through asynch"}
-// 	if (callback instanceof Function) { callback(result); }
-//     else { return result; }
-
-
-//     exports.printresults = printresults = function printresults (data) {
-// 		proxyprinttodiv('from test', JSON.stringify(data), 99);
-// }
+ 
 //  exports.rogertesta = rogertesta = function rogertesta(parms, callback) {
 //     // executetest('updatewid', {wid:'jasontestwid',this:'that',something:'else'}, '', '');
 //     // executetest('getwid', {wid:'jasontestwid'});
@@ -88,7 +7,6 @@ exports.mongotest13 = mongotest13 = function mongotest13(parms, callback) {
 // 			function (data) {execute({'executethis':'getwidwid', wid:'jasontestwid'}), callback)})
 //     	)
 // }
-
 
 
     exports.ca1 = ca1 = function ca1() {
@@ -200,7 +118,6 @@ exports.mongotest13 = mongotest13 = function mongotest13(parms, callback) {
 exports.w1 = w1 = function w1 () {
 	testclearstorage();
 	var result;
-    debuglevel=11;
 	//result = executethis({"executethis":"func_bbb", "c":"0", "d":"1", "e":"2"}, func_bbb);
 	result = executethis({"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, func_b);
 	proxyprinttodiv('from test', result, 99);

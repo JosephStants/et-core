@@ -214,6 +214,7 @@ $(document).ready(function() {
 
 $('#execute_function').click(function() {
 	// bootprocess();
+	localStorage.clear();
 	$('#resultDiv').text("");
 	$('#test_result_message').text("");
 	$('#divprint').text("");
@@ -225,9 +226,10 @@ $('#execute_function').click(function() {
 	// var y = verifysummary("test_results");
 	var y = 0; // verifysummary_local(result);
 	if (result_count > 0) y = verifysummary_local(result);
-	if (result.hasOwnProperty('executethis') && result_count == 1) {
-		alert ('Something when wrong with the test...all your function returned was ' + JSON.stringify(result));
-	} else if (y['resultwid'] == "PASS" || y['resultwid'] == "FAIL") { 
+	// if (result.hasOwnProperty('executethis') && result_count == 1) {
+	// 	alert ('Something when wrong with the test...all your function returned was ' + JSON.stringify(result));
+	// } else 
+	if (y['resultwid'] == "PASS" || y['resultwid'] == "FAIL") { 
 		showPassFail(y) 
 	};
 
@@ -241,11 +243,11 @@ $('#execute_function').click(function() {
 	// $('#resultDiv').text(JSON.stringify(x));
 
 	if (exports.environment == 'local') displayAllWids();
-	if ((typeof localStore) !== "undefined") {
+	// if ((typeof localStore) !== "undefined") {
 		displaylocalStore();
-	} else {
-		document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
-	}
+	// } else {
+	// 	document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
+	// }
 });
 
 function show_function_output (x) {
