@@ -179,7 +179,7 @@
         if ((params === undefined) || (params==="")) {params={}};
         
         if (params['configuration'] !== undefined){
-            var incomingConfig = params['configuration'][configtarget]; // get send in config
+            var incomingConfig = params['configuration'][configtarget][0]; // get send in config
             proxyprinttodiv("CreateDoList - incomingConfig ", incomingConfig, 11);
         }
 
