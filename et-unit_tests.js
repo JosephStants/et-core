@@ -99,11 +99,12 @@ exports.ctt = ctt = function ctt (params, callback) {
 	ct4a();
 	ct5();
 	ct6();
-	// ct7();
+	ct7();
 	ct8();
-	// ct9();
-	// ct10();
-	// ct11();
+	ct9();
+	ct10();
+	ct11();
+	// ct14();
 	var x = test_results;
     if (callback instanceof Function) { 
     	callback(x); 
@@ -146,23 +147,23 @@ exports.xtt = xtt = function xtt (params, callback) {
 exports.test99 = test99 = function test99 (params, callback) {
 	testclearstorage();
 	config = executetest("executethis", {"executethis":"mongoquery", "wid" : "test1"},"t99_output","");
-	params = logverify("unit_tests","test99_result","test99_output","","",{"executethis":"async_func_b","d":"1","g":"4","h":"5"});
+	params = logverify("unit_tests","test99_result","test99_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
     	return params; 
     }
 }
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------------------
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 // functions a,b,c manipulate parameters
 // Call func_b with no pre or post
 exports.t1 = t1 = function t1 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, "t1_output", "");
-	params = logverify("unit_tests","t1_result","t1_output","","",{"executethis":"func_b","d":"1","c":"0","g":"4"});
+	params = logverify("unit_tests","t1_result","t1_output","","",{"d":"1","c":"0","g":"4"});
 	// params = logverify("unit_tests","t1_result","t1_output","","",{"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
@@ -175,7 +176,7 @@ exports.tfail = tfail = function tfail (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, "t1_output", "");
-	params = logverify("unit_tests","t1_result","t1_output","","",{"executethis":"func_b","d":"1","c":"0","g":"5"});
+	params = logverify("unit_tests","t1_result","t1_output","","",{"d":"1","c":"0","g":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -188,7 +189,7 @@ exports.t2 = t2 = function t2 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","preexecute":"func_a","postexecute":"func_c"}, "t2_output", "");	
-	params = logverify("unit_tests","t2_result","t2_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("unit_tests","t2_result","t2_output","","",{"f":"3","g":"4","h":"5"});
 	// params = logverify("readstartwid","resultwid","startwid_authordto" ,"","",{"age":"00","name":"start wid","wid":"startwid","metadata.method":"authordto","booksdto.0.metadata.method":"booksdto","booksdto.0.wid":"1","booksdto.0.title":"none","booksdto.0.pages":"00","adddto.0.metadata.method":"adddto","adddto.0.wid":"13","adddto.0.actiondto.0.metadata.method":"actiondto","adddto.0.actiondto.0.wid":"14","adddto.0.actiondto.0.action":"none","adddto.0.palettedto.0.metadata.method":"palettedto","adddto.0.palettedto.0.wid":"16","adddto.0.palettedto.0.widname":"joe_jamison","adddto.0.palettedto.0.category":"human","adddto.0.palettedto.0.subcategory":"author","adddto.0.addfield.0.metadata.method":"addfield","adddto.0.addfield.0.wid":"18","adddto.0.addfield.0.fieldname":"name","adddto.0.linkrules.0.metadata.method":"linkrules","adddto.0.linkrules.0.wid":"20","adddto.0.linkrules.0.linkclass":"1","adddto.0.linkrules.0.min":"0","adddto.0.linkrules.0.max":"10","adddto.addfield.fieldname":"name","adddto.addfield.display":"true","adddto.addfield.editable":"true","adddto.addfield.onreadactions":"none","adddto.addfield.oneditactions":"pop_up_alert","adddto.addfield.wid":"addfielddefault","adddto.addfield.metadata.method":"defaultdto"});
     if (callback instanceof Function) { 
     	callback(params); 
@@ -201,7 +202,7 @@ exports.t3 = t3 = function t3 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","preexecute":"func_a"}, "t3_output", "");
-	params = logverify("unit_tests","t3_result","t3_output","","",{"executethis":"func_b","c":"0","f":"3","g":"4"});
+	params = logverify("unit_tests","t3_result","t3_output","","",{"c":"0","f":"3","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -213,7 +214,7 @@ exports.t3a = t3a = function t3a (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","postexecute":"func_a"}, "t3a_output", "");
-	params = logverify("unit_tests","t3a_result","t3a_output","","",{"executethis":"func_a","c":"0","g":"4","f":"3"});
+	params = logverify("unit_tests","t3a_result","t3a_output","","",{"c":"0","g":"4","f":"3"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -225,7 +226,7 @@ exports.t4 = t4 = function t4 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","postexecute":"func_c"}, "t4_output", "");
-	params = logverify("unit_tests","t4_result","t4_output","","",{"executethis":"func_c","d":"1","g":"4","h":"5"});
+	params = logverify("unit_tests","t4_result","t4_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -237,7 +238,7 @@ exports.t4a = t4a = function t4a (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","preexecute":"func_c"}, "t4a_output", "");
-	params = logverify("unit_tests","t4a_result","t4a_output","","",{"executethis":"func_b","d":"1","g":"4","h":"5"});
+	params = logverify("unit_tests","t4a_result","t4a_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -249,7 +250,7 @@ exports.t5 = t5 = function t5 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","preexecute":"func_a","postexecute":"func_a"}, "t5_output", "");
-	params = logverify("unit_tests","t5_result","t5_output","","",{"executethis":"func_a","c":"0","f":"3","g":"4"});
+	params = logverify("unit_tests","t5_result","t5_output","","",{"c":"0","f":"3","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -261,7 +262,7 @@ exports.t6 = t6 = function t6 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2","preexecute":"func_c","postexecute":"func_c"}, "t6_output", "");
-	params = logverify("unit_tests","t6_result","t6_output","","",{"executethis":"func_c","d":"1","h":"5","g":"4"});
+	params = logverify("unit_tests","t6_result","t6_output","","",{"d":"1","h":"5","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -273,7 +274,7 @@ exports.t7 = t7 = function t7 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, "t7_output", "");
-	params = logverify("unit_tests","t7_result","t7_output","","",{"executethis":"func_b","d":"1","c":"0","g":"4"});
+	params = logverify("unit_tests","t7_result","t7_output","","",{"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -286,7 +287,7 @@ exports.t8 = t8 = function t8 (params, callback) {
 	config = setconfig1();
 	executetest("addwidmaster",{"wid":"widb","animal":"giraffe"}, "", "");
 	executetest("executethis", {"executethis":"widb"}, "t8_output", "");
-	params = logverify("unit_tests","t8_result","t8_output","","",{"executethis":"widb","animal":"giraffe"});
+	params = logverify("unit_tests","t8_result","t8_output","","",{"animal":"giraffe"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -299,7 +300,7 @@ exports.t9 = t9 = function t9 (params, callback) {
 	config = setconfig1();
 	executetest("addwidmaster",{"wid":"widb","animal":"giraffe"}, "", "");
 	executetest("executethis", {"executethis":"widb"}, "t9_output", "");
-	params = logverify("unit_tests","t9_result","t9_output","","",{"executethis":"widb","animal":"giraffe"});
+	params = logverify("unit_tests","t9_result","t9_output","","",{"animal":"giraffe"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -307,14 +308,15 @@ exports.t9 = t9 = function t9 (params, callback) {
     }
 }
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------------------
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
 exports.ast1 = ast1 = function ast1 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2"}, "as_t1_output", "");
-	params = logverify("as_unit_tests","as_t1_result","as_t1_output","","",{"executethis":"async_func_b","d":"1","c":"0","g":"4"});
+	params = logverify("as_unit_tests","as_t1_result","as_t1_output","","",{"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -326,7 +328,7 @@ exports.ast2 = ast2 = function ast2 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","preexecute":"async_func_a","postexecute":"async_func_c"}, "as_t2_output", "");
-	params = logverify("as_unit_tests","as_t2_result","as_t2_output","","",{"executethis":"async_func_c","f":"3","g":"4","h":"5"});
+	params = logverify("as_unit_tests","as_t2_result","as_t2_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -338,7 +340,7 @@ exports.ast3 = ast3 = function ast3 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","preexecute":"async_func_a"}, "as_t3_output", "");
-	params = logverify("as_unit_tests","as_t3_result","as_t3_output","","",{"executethis":"async_func_b","c":"0","f":"3","g":"4"});
+	params = logverify("as_unit_tests","as_t3_result","as_t3_output","","",{"c":"0","f":"3","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -350,7 +352,7 @@ exports.ast3a = ast3a = function ast3a (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","postexecute":"async_func_a"}, "as_t3a_output", "");
-	params = logverify("as_unit_tests","as_t3a_result","as_t3a_output","","",{"executethis":"async_func_a","c":"0","g":"4","f":"3"});
+	params = logverify("as_unit_tests","as_t3a_result","as_t3a_output","","",{"c":"0","g":"4","f":"3"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -362,7 +364,7 @@ exports.ast4 = ast4 = function ast4 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","postexecute":"async_func_c"}, "as_t4_output", "");
-	params = logverify("as_unit_tests","as_t4_result","as_t4_output","","",{"executethis":"async_func_c","d":"1","g":"4","h":"5"});
+	params = logverify("as_unit_tests","as_t4_result","as_t4_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -374,7 +376,7 @@ exports.ast4a = ast4a = function ast4a (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","preexecute":"async_func_c"}, "as_t4a_output", "");
-	params = logverify("as_unit_tests","as_t4a_result","as_t4a_output","","",{"executethis":"async_func_b","d":"1","g":"4","h":"5"});
+	params = logverify("as_unit_tests","as_t4a_result","as_t4a_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -386,7 +388,7 @@ exports.ast5 = ast5 = function ast5 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","preexecute":"async_func_a","postexecute":"async_func_a"}, "as_t5_output", "");
-	params = logverify("as_unit_tests","as_t5_result","as_t5_output","","",{"executethis":"async_func_a","c":"0","f":"3","g":"4"});
+	params = logverify("as_unit_tests","as_t5_result","as_t5_output","","",{"c":"0","f":"3","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -398,7 +400,7 @@ exports.ast6 = ast6 = function ast6 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_b", "c":"0", "d":"1", "e":"2","preexecute":"async_func_c","postexecute":"async_func_c"}, "as_t6_output", "");
-	params = logverify("as_unit_tests","as_t6_result","as_t6_output","","",{"executethis":"async_func_c","d":"1","h":"5","g":"4"});
+	params = logverify("as_unit_tests","as_t6_result","as_t6_output","","",{"d":"1","h":"5","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -410,7 +412,7 @@ exports.ast7 = ast7 = function ast7 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"async_func_d", "c":"0", "d":"1", "e":"2"}, "as_t7_output", "");
-	params = logverify("as_unit_tests","as_t7_result","as_t7_output","","",{"executethis":"async_func_e","c":"0","h":"5"});
+	params = logverify("as_unit_tests","as_t7_result","as_t7_output","","",{"c":"0","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -431,15 +433,15 @@ exports.ast8 = ast8 = function ast8 (params, callback) {
     	return params; 
     }
 }
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------------------
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 // Call redir_b with no pre or post
 exports.ct1 = ct1 = function ct1 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2"}, "c_t1_output", "");
-	params = logverify("c_unit_tests","c_t1_result","c_t1_output","","",{"executethis":"func_b","d":"1","c":"0","g":"4"});
+	params = logverify("c_unit_tests","c_t1_result","c_t1_output","","",{"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -451,7 +453,7 @@ exports.ct2 = ct2 = function ct2 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_a","postexecute":"redir_c"}, "c_t2_output", "");
-	params = logverify("c_unit_tests","c_t2_result","c_t2_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("c_unit_tests","c_t2_result","c_t2_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -463,7 +465,7 @@ exports.ct3 = ct3 = function ct3 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_a"}, "c_t3_output", "");
-	params = logverify("c_unit_tests","c_t3_result","c_t3_output","","",{"executethis":"func_b","c":"0","f":"3","g":"4"});
+	params = logverify("c_unit_tests","c_t3_result","c_t3_output","","",{"c":"0","f":"3","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -475,7 +477,7 @@ exports.ct3a = ct3a = function ct3a (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","postexecute":"redir_a"}, "c_t3a_output", "");
-	params = logverify("c_unit_tests","c_t3a_result","c_t3a_output","","",{"executethis":"func_a","c":"0","g":"4","f":"3"});
+	params = logverify("c_unit_tests","c_t3a_result","c_t3a_output","","",{"c":"0","g":"4","f":"3"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -487,7 +489,7 @@ exports.ct4 = ct4 = function ct4 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","postexecute":"redir_c"}, "c_t4_output", "");
-	params = logverify("c_unit_tests","c_t4_result","c_t4_output","","",{"executethis":"func_c","d":"1","g":"4","h":"5"});
+	params = logverify("c_unit_tests","c_t4_result","c_t4_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -499,7 +501,7 @@ exports.ct4a = ct4a = function ct4a (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_c"}, "c_t4a_output", "");
-	params = logverify("c_unit_tests","c_t4a_result","c_t4a_output","","",{"executethis":"func_b","d":"1","g":"4","h":"5"});
+	params = logverify("c_unit_tests","c_t4a_result","c_t4a_output","","",{"d":"1","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -511,7 +513,7 @@ exports.ct5 = ct5 = function ct5 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_a","postexecute":"redir_a"}, "c_t5_output", "");
-	params = logverify("c_unit_tests","c_t5_result","c_t5_output","","",{"executethis":"func_a","c":"0","f":"3","g":"4"});
+	params = logverify("c_unit_tests","c_t5_result","c_t5_output","","",{"c":"0","f":"3","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -523,7 +525,7 @@ exports.ct6 = ct6 = function ct6 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_c","postexecute":"redir_c"}, "c_t6_output", "");
-	params = logverify("c_unit_tests","c_t6_result","c_t6_output","","",{"executethis":"func_c","d":"1","h":"5","g":"4"});
+	params = logverify("c_unit_tests","c_t6_result","c_t6_output","","",{"d":"1","h":"5","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -535,25 +537,27 @@ exports.ct6 = ct6 = function ct6 (params, callback) {
 exports.ct7 = ct7 = function ct7 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
-	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2", "preexecute": "a",
+	executetest("executethis", {"c":"0", "d":"1", "e":"2", "preexecute": "a", "executethis":"func_b",
     "configuration": {
         "preexecute": [
             {
                 "dothis": "executeFn",
-                "tryorder": "0",
-                "executeorder": "0"
+                "tryorder": 0,
+                "executeorder": 0,
+                "params": {}
             }
         ],
         "a": [
             {
                 "dothis": "alertFn1",
-                "tryorder": "0",
-                "executeorder": "0"
+                "tryorder": 0,
+                "executeorder": 0,
+                "params": {}
             }
         ]
     }}, "c_t7_output", "");
 	// params = logverify("c_unit_tests","ct7_result","ct7_output","","",{"c":"0","d":"1","executethis":"func_b","ct7":"did some alerting","g":"4","howtodooverride":"you got your hottodooverwritten"});
-	params = logverify("c_unit_tests","ct7_result","ct7_output","","",{"c":"0","d":"1","executethis":"func_b","ct7":"did some alerting","g":"4"});
+	params = logverify("c_unit_tests","ct7_result","ct7_output","","",{"c":"0","d":"1","ct7":"did some alerting","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -564,7 +568,7 @@ exports.ct7 = ct7 = function ct7 (params, callback) {
 exports.ct7a = ct7a = function ct7a (params, callback) {
 	testclearstorage();
 	config = setconfig6();
-	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2", "preexecute": "a",
+	executetest("executethis", {"c":"0", "d":"1", "e":"2", "preexecute": "a",
     "configuration": {
         "preexecute": [
             {
@@ -582,7 +586,7 @@ exports.ct7a = ct7a = function ct7a (params, callback) {
         ]
     }}, "c_t7_output", "");
 	// params = logverify("c_unit_tests","c_t7_result","c_t7_output","","",{"c":"0","d":"1","executethis":"func_b","ct7a":"did some alerting","g":"4","howtodooverride":"you got your hottodooverwritten"});
-	params = logverify("c_unit_tests","ct7a_result","ct7a_output","","",{"c":"0","d":"1","executethis":"func_b","ct7a":"did some alerting","g":"4"});
+	params = logverify("c_unit_tests","ct7a_result","ct7a_output","","",{"c":"0","d":"1","ct7a":"did some alerting","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -597,7 +601,7 @@ exports.ct8 = ct8 = function ct8 (params, callback) {
 	testclearstorage();
 	config = setconfig5();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, "ct8_output", "");
-	params = logverify("c_unit_tests","ct8_result","ct8_output","","",{"executethis":"func_b","d":"1","c":"0","g":"4"});
+	params = logverify("c_unit_tests","ct8_result","ct8_output","","",{"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -609,7 +613,7 @@ exports.ct9 = ct9 = function ct9 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"does_not_exist", "does_not_exist":"func_b", "c":"0", "d":"1", "e":"2"}, "ct9_output", "");
-	params = logverify("c_unit_tests","ct9_result","ct9_output","","",{"executethis":"func_b","d":"1","c":"0","g":"4"});
+	params = logverify("c_unit_tests","ct9_result","ct9_output","","",{"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -621,7 +625,7 @@ exports.ct9a = ct9a = function ct9a (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"does_not_exist", "does_not_exist":"function () { return 'Keg of Beer'; }"}, "ct9a_output", "");
-	params = logverify("c_unit_tests","ct9a_result","ct9a_output","","",{"executethis":"does_not_exist","data":"Keg of Beer"});
+	params = logverify("c_unit_tests","ct9a_result","ct9a_output","","",{"data":"Keg of Beer"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -635,7 +639,7 @@ exports.ct10 = ct10 = function ct10 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "preexecute":"does_not_exist","does_not_exist":"func_a", "c":"0", "d":"1", "e":"2"}, "ct10_output", "");
-	params = logverify("c_unit_tests","ct10_result","ct10_output","","",{"executethis":"func_b","f":"3","c":"0","g":"4"});
+	params = logverify("c_unit_tests","ct10_result","ct10_output","","",{"f":"3","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -649,7 +653,7 @@ exports.ct11 = ct11 = function ct11 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "preexecute":"does_not_exist","does_not_exist_1":"func_a", "postexecute":"does_not_exist_2","does_not_exist_2":"func_c", "c":"0", "d":"1", "e":"2"}, "ct11_output", "");
-	params = logverify("c_unit_tests","ct11_result","ct11_output","","",{"executethis":"func_c","f":"3","h":"5","g":"4"});
+	params = logverify("c_unit_tests","ct11_result","ct11_output","","",{"f":"3","h":"5","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -664,7 +668,7 @@ exports.ct12 = ct12 = function ct12 (params, callback) {
 	config = setconfig1();
 
 	executetest ("executethis", 
-				{"executethis":"func_b", "c":"0", "d":"1", "e":"2", "preexecute": "a",
+				{"c":"0", "d":"1", "e":"2", "preexecute": "a",
 				    "configuration": {
 								        "preexecute": [
 								            {
@@ -690,13 +694,16 @@ exports.ct12 = ct12 = function ct12 (params, callback) {
 				"c_t12_output",
 				"");
 
-	params = logverify("c_unit_tests","c_t12_result","c_t12_output","","",{"c":"0","d":"1","executethis":"func_b","ct12":"did some alerting","g":"4"});
+	params = logverify("c_unit_tests","c_t12_result","c_t12_output","","",{"c":"0","d":"1","ct12":"did some alerting","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
     	return params; 
     }
 }
+
+// --------------not implemnted yet
+
 // This test is to test a config where a and b do not exist, but c does and c will execute. You
 // should not see any data for ct13_output_a, or b.
 exports.ct13 = ct13 = function ct13 (params, callback) {
@@ -705,7 +712,7 @@ exports.ct13 = ct13 = function ct13 (params, callback) {
 	executetest("executethis", {"executethis":"a"}, "ct13_output_a", "");
 	executetest("executethis", {"executethis":"b"}, "ct13_output_b", "");
 	executetest("executethis", {"executethis":"c"}, "ct13_output_c", "");
-	params = logverify("c_unit_tests","ct13_result","ct13_output_c","","",{"executethis":"c","fire_c":"0"});
+	params = logverify("c_unit_tests","ct13_result","ct13_output_c","","",{"fire_c":"0"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -713,12 +720,13 @@ exports.ct13 = ct13 = function ct13 (params, callback) {
     }
 }
 
-// This test is to test a config where a config with params is sent to preexecute
+// This test is to test a config where a config with params is sent to pre, mid, and post.
+// The results should have the a,b,c cereals, along with the regular params.
 exports.ct14 = ct14 = function ct14 (params, callback) {
 	testclearstorage();
 	config = setconfig6();
-	executetest("executethis", {"executethis":"a"}, "ct14_output", "");
-	params = logverify("c_unit_tests","ct14_result","ct14_output","","",{"executethis":"c","fire_c":"0"});
+	executetest("executethis", {"executethis":"func_b","preexecute":"func_a","postexecute":"func_c", "c":"0", "d":"1", "e":"2"}, "ct14_output", "");
+	params = logverify("c_unit_tests","ct14_result","ct14_output","","",{"g":"4","cer2":"booberry","cer1":"alphabits","f":"3","cer3":"chex","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -726,15 +734,29 @@ exports.ct14 = ct14 = function ct14 (params, callback) {
     }
 }
 
-
-
+// This will send the alphabits param in the preexecute config, but will overriding it in the args to
+// win out? It does not...the args are lost and the params from the config win out.
+exports.ct15 = ct15 = function ct15 (params, callback) {
+	testclearstorage();
+	config = setconfig6();
+	executetest("executethis", {"executethis":"func_b","preexecute":"func_a", "cer1":"booberry","c":"0", "d":"1", "e":"2"}, "ct15_output", "");
+	params = logverify("c_unit_tests","ct15_result","ct15_output","","",{"g":"4","cer1":"alphabits","cer2":"booberry","f":"3","c":"0"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
 // Template for a new test, yet to be determined
 exports.ct1000 = ct1000 = function ct1000 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, "ct1000_output", "");
-	params = logverify("c_unit_tests","ct1000_result","ct1000_output","","",{"executethis":"func_b","c":"0","d":"1","g":"4"});
+	params = logverify("c_unit_tests","ct1000_result","ct1000_output","","",{"c":"0","d":"1","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -749,7 +771,7 @@ exports.other_func = other_func = function other_func(params, callback) {
 }
 
 exports.alertFn1 = alertFn1 = function alertFn1 (params, callback) {
-	// alert('ct7 has alerted');
+	alert('ct7 has alerted');
 	params["ct7"] = "did some alerting";
 	// delete params["configuration"];
     if (callback instanceof Function) { 
@@ -763,7 +785,7 @@ exports.ft1 = ft1 = function ft1 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "c":"0", "d":"1", "e":"2"}, "ft1_output", "");
-	params = logverify("c_unit_tests","ft1_result","ft1_output","","",{"executethis":"func_b","c":"0","d":"1","g":"4"});
+	params = logverify("c_unit_tests","ft1_result","ft1_output","","",{"c":"0","d":"1","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -955,7 +977,7 @@ exports.testa = testa = function testa (params, callback) {
 
 exports.testb_setup = testb_setup = function testb_setup (params, callback) {
     executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
-    executetest("getwidmaster", {"wid":"sounddto"}, "get_sounddto_result", "");
+    // executetest("getwidmaster", {"wid":"sounddto"}, "get_sounddto_result", "");
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -1087,7 +1109,7 @@ exports.testf = testf = function testf (params, callback) {
 	parameters ["wid"] = "red";
 	var ghi = 'boo'; //executethis(parameters, "addwidmaster");
 	executetest("addwidmaster", {"wid":"different_add_wids","a":abc,"b":def,"a":ghi }, "testf_output", "");
-	params = logverify("unit_tests","testf_result","testf_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("unit_tests","testf_result","testf_output","","",{"f":"3","g":"4","h":"5"});
 	// params = logverify("readstartwid","resultwid","startwid_authordto" ,"","",{"age":"00","name":"start wid","wid":"startwid","metadata.method":"authordto","booksdto.0.metadata.method":"booksdto","booksdto.0.wid":"1","booksdto.0.title":"none","booksdto.0.pages":"00","adddto.0.metadata.method":"adddto","adddto.0.wid":"13","adddto.0.actiondto.0.metadata.method":"actiondto","adddto.0.actiondto.0.wid":"14","adddto.0.actiondto.0.action":"none","adddto.0.palettedto.0.metadata.method":"palettedto","adddto.0.palettedto.0.wid":"16","adddto.0.palettedto.0.widname":"joe_jamison","adddto.0.palettedto.0.category":"human","adddto.0.palettedto.0.subcategory":"author","adddto.0.addfield.0.metadata.method":"addfield","adddto.0.addfield.0.wid":"18","adddto.0.addfield.0.fieldname":"name","adddto.0.linkrules.0.metadata.method":"linkrules","adddto.0.linkrules.0.wid":"20","adddto.0.linkrules.0.linkclass":"1","adddto.0.linkrules.0.min":"0","adddto.0.linkrules.0.max":"10","adddto.addfield.fieldname":"name","adddto.addfield.display":"true","adddto.addfield.editable":"true","adddto.addfield.onreadactions":"none","adddto.addfield.oneditactions":"pop_up_alert","adddto.addfield.wid":"addfielddefault","adddto.addfield.metadata.method":"defaultdto"});
     if (callback instanceof Function) { 
     	callback(params); 
@@ -1124,7 +1146,7 @@ exports.testg = testg = function testg (params, callback) {
 	var parameters = {"wid":"green", "executethis": addwidmaster};
 	var abc = executethis(parameters);
 	executetest("addwidmaster", {"this_wid_was_added":abc }, "testg_output", "");
-	params = logverify("unit_tests","testg_result","testg_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("unit_tests","testg_result","testg_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -1138,7 +1160,7 @@ exports.testh = testh = function testh () {
 	var parameters = {"executethis": addwidmaster, "wid":"green"};
 	var abc = executethis(parameters, execute);
 	executetest("addwidmaster", {"this_wid_was_added":abc }, "testh_output", "");
-	params = logverify("unit_tests","testh_result","testh_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("unit_tests","testh_result","testh_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -1152,7 +1174,7 @@ exports.testi = testi = function testi (params, callback) {
 	var parameters = {"executethis": addwidmaster, "wid":"green"};
 	var abc = executethis(parameters, "execute");
 	executetest("addwidmaster", {"this_wid_was_added":abc }, "testi_output", "");
-	params = logverify("unit_tests","testi_result","testi_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("unit_tests","testi_result","testi_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -1167,7 +1189,7 @@ exports.testj = testj = function testj (params, callback) {
 	var parameters = {"executethis": executeParam, "wid":"green"};
 	var abc = executethis(parameters, "execute");
 	executetest("addwidmaster", {"this_wid_was_added":abc }, "testi_output", "");
-	params = logverify("unit_tests","testi_result","testi_output","","",{"executethis":"func_c","f":"3","g":"4","h":"5"});
+	params = logverify("unit_tests","testi_result","testi_output","","",{"f":"3","g":"4","h":"5"});
 
     if (callback instanceof Function) { 
     	callback(params); 
@@ -1438,54 +1460,66 @@ exports.setconfig1 = setconfig1 = function setconfig1() {
     configuration.preExecute[0].executeorder = 0;
     configuration.preExecute[0].tryorder = 0;
     configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {};
     configuration.preExecute[1] = {};
     configuration.preExecute[1].executeorder = 0;
     configuration.preExecute[1].tryorder = 0;
     configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
     configuration.preExecute[2] = {};
     configuration.preExecute[2].executeorder = 0;
     configuration.preExecute[2].tryorder = 0;
     configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
     configuration.preExecute[3] = {};
     configuration.preExecute[3].executeorder = 0;
     configuration.preExecute[3].tryorder = 0;
     configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
 
     configuration.midExecute = [];
     configuration.midExecute[0] = {};
     configuration.midExecute[0].executeorder = 0;
     configuration.midExecute[0].tryorder = 0;
     configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {};
     configuration.midExecute[1] = {};
     configuration.midExecute[1].executeorder = 0;
     configuration.midExecute[1].tryorder = 0;
     configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
     configuration.midExecute[2] = {};
     configuration.midExecute[2].executeorder = 0;
     configuration.midExecute[2].tryorder = 0;
     configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
     configuration.midExecute[3] = {};
     configuration.midExecute[3].executeorder = 0;
     configuration.midExecute[3].tryorder = 0;
     configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
 
     configuration.postExecute = [];
     configuration.postExecute[0] = {};
     configuration.postExecute[0].executeorder = 0;
     configuration.postExecute[0].tryorder = 0;
     configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {};
     configuration.postExecute[1] = {};
     configuration.postExecute[1].executeorder = 0;
     configuration.postExecute[1].tryorder = 0;
     configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
 
     return {
         "configuration": configuration
@@ -1505,16 +1539,19 @@ exports.setconfig2 = setconfig2 = function setconfig2() {
     configuration.getwid[0].executeorder = 0;
     configuration.getwid[0].tryorder = 0;
     configuration.getwid[0].dothis = 'getfrommongo';
+    configuration.getwid[0].params = {};
 
     configuration.updatewid = [];
     configuration.updatewid[0] = {};
     configuration.updatewid[0].order = 0;
     configuration.updatewid[0].dothis = 'addtomongo';
+    configuration.updatewid[0].params = {};
 
     configuration.querywid = [];
     configuration.querywid[0] = {};
     configuration.querywid[0].order = 0;
     configuration.querywid[0].dothis = 'querywid';
+    configuration.querywid[0].params = {};
 
 
     configuration.preExecute = [];
@@ -1522,54 +1559,66 @@ exports.setconfig2 = setconfig2 = function setconfig2() {
     configuration.preExecute[0].executeorder = 0;
     configuration.preExecute[0].tryorder = 0;
     configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {};
     configuration.preExecute[1] = {};
     configuration.preExecute[1].executeorder = 0;
     configuration.preExecute[1].tryorder = 0;
     configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
     configuration.preExecute[2] = {};
     configuration.preExecute[2].executeorder = 0;
     configuration.preExecute[2].tryorder = 0;
     configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
     configuration.preExecute[3] = {};
     configuration.preExecute[3].executeorder = 0;
     configuration.preExecute[3].tryorder = 0;
     configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
 
     configuration.midExecute = [];
     configuration.midExecute[0] = {};
     configuration.midExecute[0].executeorder = 0;
     configuration.midExecute[0].tryorder = 0;
     configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {};
     configuration.midExecute[1] = {};
     configuration.midExecute[1].executeorder = 0;
     configuration.midExecute[1].tryorder = 0;
     configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
     configuration.midExecute[2] = {};
     configuration.midExecute[2].executeorder = 0;
     configuration.midExecute[2].tryorder = 0;
     configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
     configuration.midExecute[3] = {};
     configuration.midExecute[3].executeorder = 0;
     configuration.midExecute[3].tryorder = 0;
     configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
 
     configuration.postExecute = [];
     configuration.postExecute[0] = {};
     configuration.postExecute[0].executeorder = 0;
     configuration.postExecute[0].tryorder = 0;
     configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {};
     configuration.postExecute[1] = {};
     configuration.postExecute[1].executeorder = 0;
     configuration.postExecute[1].tryorder = 0;
     configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
 
 
     configuration.redir_a = [];
@@ -1577,12 +1626,14 @@ exports.setconfig2 = setconfig2 = function setconfig2() {
     configuration.redir_a[0].executeorder = 0;
     configuration.redir_a[0].tryorder = 0;
     configuration.redir_a[0].dothis = 'func_a';
+    configuration.redir_a[0].params = {};
 
     configuration.redir_b = [];
     configuration.redir_b[0] = {};
     configuration.redir_b[0].executeorder = 0;
     configuration.redir_b[0].tryorder = 0;
     configuration.redir_b[0].dothis = 'func_b';
+    configuration.redir_b[0].params = {};
 
     
     configuration.redir_c = [];
@@ -1590,6 +1641,7 @@ exports.setconfig2 = setconfig2 = function setconfig2() {
     configuration.redir_c[0].executeorder = 0;
     configuration.redir_c[0].tryorder = 0;
     configuration.redir_c[0].dothis = 'func_c';
+    configuration.redir_c[0].params = {};
 
     return {
         "configuration": configuration
@@ -1605,70 +1657,85 @@ exports.setconfig3 = setconfig3 = function setconfig3() {
     configuration.getwid[0] = {};
     configuration.getwid[0].order = 0;
     configuration.getwid[0].dothis = 'getfrommongo';	
+    configuration.getwid[0].params = {};
 
     configuration.updatewid = [];
     configuration.updatewid[0] = {};
     configuration.updatewid[0].order = 0;
     configuration.updatewid[0].dothis = 'addtomongo';
+    configuration.updatewid[0].params = {};
 
     configuration.querywid = [];
     configuration.querywid[0] = {};
     configuration.querywid[0].order = 0;
     configuration.querywid[0].dothis = 'querywid';
+    configuration.querywid[0].params = {};
 
     configuration.preExecute = [];
     configuration.preExecute[0] = {};
     configuration.preExecute[0].executeorder = 0;
     configuration.preExecute[0].tryorder = 0;
     configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {};
     configuration.preExecute[1] = {};
     configuration.preExecute[1].executeorder = 0;
     configuration.preExecute[1].tryorder = 0;
     configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
     configuration.preExecute[2] = {};
     configuration.preExecute[2].executeorder = 0;
     configuration.preExecute[2].tryorder = 0;
     configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
     configuration.preExecute[3] = {};
     configuration.preExecute[3].executeorder = 0;
     configuration.preExecute[3].tryorder = 0;
     configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
 
     configuration.midExecute = [];
     configuration.midExecute[0] = {};
     configuration.midExecute[0].executeorder = 0;
     configuration.midExecute[0].tryorder = 0;
     configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {};
     configuration.midExecute[1] = {};
     configuration.midExecute[1].executeorder = 0;
     configuration.midExecute[1].tryorder = 0;
     configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
     configuration.midExecute[2] = {};
     configuration.midExecute[2].executeorder = 0;
     configuration.midExecute[2].tryorder = 0;
     configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
     configuration.midExecute[3] = {};
     configuration.midExecute[3].executeorder = 0;
     configuration.midExecute[3].tryorder = 0;
     configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
 
     configuration.postExecute = [];
     configuration.postExecute[0] = {};
     configuration.postExecute[0].executeorder = 0;
     configuration.postExecute[0].tryorder = 0;
     configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {};
     configuration.postExecute[1] = {};
     configuration.postExecute[1].executeorder = 0;
     configuration.postExecute[1].tryorder = 0;
     configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
 
     return {
         "configuration": configuration
@@ -1682,70 +1749,85 @@ exports.setconfig4 = setconfig4 = function setconfig4() {
     configuration.getwid[0] = {};
     configuration.getwid[0].order = 0;
     configuration.getwid[0].dothis = 'getfrommongo';	
+    configuration.getwid[0].params = {};
 
     configuration.updatewid = [];
     configuration.updatewid[0] = {};
     configuration.updatewid[0].order = 0;
     configuration.updatewid[0].dothis = 'addtomongo';
+    configuration.updatewid[0].params = {};
 
     configuration.querywid = [];
     configuration.querywid[0] = {};
     configuration.querywid[0].order = 0;
     configuration.querywid[0].dothis = 'querywid';
+    configuration.querywid[0].params = {};
 
     configuration.preExecute = [];
     configuration.preExecute[0] = {};
     configuration.preExecute[0].executeorder = 0;
     configuration.preExecute[0].tryorder = 0;
     configuration.preExecute[0].dothis = 'func_g'; // This is the change to remark
+    configuration.preExecute[0].params = {};
     configuration.preExecute[1] = {};
     configuration.preExecute[1].executeorder = 0;
     configuration.preExecute[1].tryorder = 0;
     configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
     configuration.preExecute[2] = {};
     configuration.preExecute[2].executeorder = 0;
     configuration.preExecute[2].tryorder = 0;
     configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
     configuration.preExecute[3] = {};
     configuration.preExecute[3].executeorder = 0;
     configuration.preExecute[3].tryorder = 0;
     configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
 
     configuration.midExecute = [];
     configuration.midExecute[0] = {};
     configuration.midExecute[0].executeorder = 0;
     configuration.midExecute[0].tryorder = 0;
     configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {};
     configuration.midExecute[1] = {};
     configuration.midExecute[1].executeorder = 0;
     configuration.midExecute[1].tryorder = 0;
     configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
     configuration.midExecute[2] = {};
     configuration.midExecute[2].executeorder = 0;
     configuration.midExecute[2].tryorder = 0;
     configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
     configuration.midExecute[3] = {};
     configuration.midExecute[3].executeorder = 0;
     configuration.midExecute[3].tryorder = 0;
     configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
 
     configuration.postExecute = [];
     configuration.postExecute[0] = {};
     configuration.postExecute[0].executeorder = 0;
     configuration.postExecute[0].tryorder = 0;
     configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {};
     configuration.postExecute[1] = {};
     configuration.postExecute[1].executeorder = 0;
     configuration.postExecute[1].tryorder = 0;
     configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
     configuration.postExecute[2] = {};
     configuration.postExecute[2].executeorder = 0;
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
 
     return {
         "configuration": configuration
@@ -1764,36 +1846,44 @@ exports.setconfig5 = setconfig5 = function setconfig5() {
     configuration.preExecute[0].executeorder = 0;
     configuration.preExecute[0].tryorder = 0;
     configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {};
     configuration.preExecute[1] = {};
     configuration.preExecute[1].executeorder = 0;
     configuration.preExecute[1].tryorder = 0;
     configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
     configuration.preExecute[2] = {};
     configuration.preExecute[2].executeorder = 0;
     configuration.preExecute[2].tryorder = 0;
     configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
     configuration.preExecute[3] = {};
     configuration.preExecute[3].executeorder = 0;
     configuration.preExecute[3].tryorder = 0;
     configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
 
     configuration.midExecute = [];
     configuration.midExecute[0] = {};
     configuration.midExecute[0].executeorder = 10;
     configuration.midExecute[0].tryorder = 10;
     configuration.midExecute[0].dothis = 'server';
+    configuration.midExecute[0].params = {};
     configuration.midExecute[1] = {};
     configuration.midExecute[1].executeorder = 4;
     configuration.midExecute[1].tryorder = 4;
     configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
     configuration.midExecute[2] = {};
     configuration.midExecute[2].executeorder = 7;
     configuration.midExecute[2].tryorder = 7;
     configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
     configuration.midExecute[3] = {};
     configuration.midExecute[3].executeorder = 1;
     configuration.midExecute[3].tryorder = 1;
     configuration.midExecute[3].dothis = 'executeFn';
+    configuration.midExecute[3].params = {};
 
     configuration.postExecute = [];
     configuration.postExecute[0] = {};
@@ -1821,17 +1911,91 @@ exports.setconfig5 = setconfig5 = function setconfig5() {
 exports.setconfig6 = setconfig6 = function setconfig6() {
     configuration = {};
 	configuration.environment='local';
+    
+    configuration.preExecute = [];
+    configuration.preExecute[0] = {};
+    configuration.preExecute[0].executeorder = 0;
+    configuration.preExecute[0].tryorder = 0;
+    configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {'cer1':'alphabits'};
+    configuration.preExecute[1] = {};
+    configuration.preExecute[1].executeorder = 0;
+    configuration.preExecute[1].tryorder = 0;
+    configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
+    configuration.preExecute[2] = {};
+    configuration.preExecute[2].executeorder = 0;
+    configuration.preExecute[2].tryorder = 0;
+    configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
+    configuration.preExecute[3] = {};
+    configuration.preExecute[3].executeorder = 0;
+    configuration.preExecute[3].tryorder = 0;
+    configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
 
-	configuration.c = [];
-    configuration.c[0] = {};
-    configuration.c[0].executeorder = 0;
-    configuration.c[0].tryorder = 0;
-    configuration.c[0].dothis = 'fire_c';
+    configuration.midExecute = [];
+    configuration.midExecute[0] = {};
+    configuration.midExecute[0].executeorder = 0;
+    configuration.midExecute[0].tryorder = 0;
+    configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {'cer2':'booberry'};
+    configuration.midExecute[1] = {};
+    configuration.midExecute[1].executeorder = 0;
+    configuration.midExecute[1].tryorder = 0;
+    configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
+    configuration.midExecute[2] = {};
+    configuration.midExecute[2].executeorder = 0;
+    configuration.midExecute[2].tryorder = 0;
+    configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
+    configuration.midExecute[3] = {};
+    configuration.midExecute[3].executeorder = 0;
+    configuration.midExecute[3].tryorder = 0;
+    configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
+    configuration.postExecute = [];
+    configuration.postExecute[0] = {};
+    configuration.postExecute[0].executeorder = 0;
+    configuration.postExecute[0].tryorder = 0;
+    configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {'cer3':'chex'};
+    configuration.postExecute[1] = {};
+    configuration.postExecute[1].executeorder = 0;
+    configuration.postExecute[1].tryorder = 0;
+    configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
+    configuration.postExecute[2] = {};
+    configuration.postExecute[2].executeorder = 0;
+    configuration.postExecute[2].tryorder = 0;
+    configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
+    configuration.postExecute[2] = {};
+    configuration.postExecute[2].executeorder = 0;
+    configuration.postExecute[2].tryorder = 0;
+    configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
 
-    configuration.a = [];
-    configuration.a[0] = {};
-    configuration.a[0].executeorder = 0;
-    configuration.a[0].tryorder = 0;
+    return {
+        "configuration": configuration
+    }
+}
+
+	// configuration.c = [];
+    // configuration.c[0] = {};
+    // configuration.c[0].executeorder = 0;
+    // configuration.c[0].tryorder = 0;
+    // configuration.c[0].dothis = 'fire_c';
+    // configuration.c[0].params = {};
+
+    // configuration.a = [];
+    // configuration.a[0] = {};
+    // configuration.a[0].executeorder = 0;
+    // configuration.a[0].tryorder = 0;
+    // configuration.a[0].dothis = 'func_a';
+    // configuration.a[0].params = {'cereal':'alphabits'};
+
     // configuration.a[0].dothis = {"configuration":"[
 				// 									{
 				// 									  	configuration.newparam:[];
@@ -1841,64 +2005,3 @@ exports.setconfig6 = setconfig6 = function setconfig6() {
 				// 									    configuration.newparam[0].dothis = 'do_new_func';       
 				// 									}
     // 											]"};
-
-
-
-    configuration.preExecute = [];
-    configuration.preExecute[0] = {};
-    configuration.preExecute[0].executeorder = 0;
-    configuration.preExecute[0].tryorder = 0;
-    configuration.preExecute[0].dothis = 'executeFn';
-    configuration.preExecute[1] = {};
-    configuration.preExecute[1].executeorder = 0;
-    configuration.preExecute[1].tryorder = 0;
-    configuration.preExecute[1].dothis = 'executeParam';
-    configuration.preExecute[2] = {};
-    configuration.preExecute[2].executeorder = 0;
-    configuration.preExecute[2].tryorder = 0;
-    configuration.preExecute[2].dothis = 'executeDefault';
-    configuration.preExecute[3] = {};
-    configuration.preExecute[3].executeorder = 0;
-    configuration.preExecute[3].tryorder = 0;
-    configuration.preExecute[3].dothis = 'server';
-
-    configuration.midExecute = [];
-    configuration.midExecute[0] = {};
-    configuration.midExecute[0].executeorder = 0;
-    configuration.midExecute[0].tryorder = 0;
-    configuration.midExecute[0].dothis = 'executeFn';
-    configuration.midExecute[1] = {};
-    configuration.midExecute[1].executeorder = 0;
-    configuration.midExecute[1].tryorder = 0;
-    configuration.midExecute[1].dothis = 'executeParam';
-    configuration.midExecute[2] = {};
-    configuration.midExecute[2].executeorder = 0;
-    configuration.midExecute[2].tryorder = 0;
-    configuration.midExecute[2].dothis = 'executeDefault';
-    configuration.midExecute[3] = {};
-    configuration.midExecute[3].executeorder = 0;
-    configuration.midExecute[3].tryorder = 0;
-    configuration.midExecute[3].dothis = 'server';
-
-    configuration.postExecute = [];
-    configuration.postExecute[0] = {};
-    configuration.postExecute[0].executeorder = 0;
-    configuration.postExecute[0].tryorder = 0;
-    configuration.postExecute[0].dothis = 'executeFn';
-    configuration.postExecute[1] = {};
-    configuration.postExecute[1].executeorder = 0;
-    configuration.postExecute[1].tryorder = 0;
-    configuration.postExecute[1].dothis = 'executeParam';
-    configuration.postExecute[2] = {};
-    configuration.postExecute[2].executeorder = 0;
-    configuration.postExecute[2].tryorder = 0;
-    configuration.postExecute[2].dothis = 'executeDefault';
-    configuration.postExecute[2] = {};
-    configuration.postExecute[2].executeorder = 0;
-    configuration.postExecute[2].tryorder = 0;
-    configuration.postExecute[2].dothis = 'server';
-
-    return {
-        "configuration": configuration
-    }
-}

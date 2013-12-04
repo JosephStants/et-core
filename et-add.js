@@ -66,7 +66,7 @@
             var x = window['execute'];
             //rawobject=executethis(executeobject,x);
             execute(executeobject, function (rawobject) {
-                 executecallback();
+                 executecallback;
             });
         }
 
@@ -91,19 +91,16 @@
                         execute(executeobject, function (rawobject){
                             rawobject = jsonConcat(rawobject,rawobject);
                             if (cnt<indtolength){recurse1(cnt)};
-                            }); 
-                        }
-                    else {
+                        }); 
+					} else {
                         if (cnt<indtolength){
                             recurse1(cnt)
-                            } 
-                        else {
+						} else {
                             executecallbackpart1();
-                            }
-                        }
-                    })( 0 ); // run recurse1 at least once starting with cnt=0
-                    
-                } // if length
+                        };
+                    }
+                })( 0 ); // run recurse1 at least once starting with cnt=0  
+			} // if length
             else { // if length = 0
                 executecallbackpart2();
                 }
@@ -131,8 +128,8 @@
             //var addresult=executethis(InListObj,updatewid);
             InListObj['executethis']=updatewid;
             execute(InListObj, function (addresult){
-            //return InListObj;
-            callback(addresult);
+				//return InListObj;
+				callback(addresult);
             });   
         } //executecallbackpart2
 	}
@@ -868,7 +865,22 @@
 			var sortable=[];
 			var currentitem='';
 			var childrentype=''
-			for(childrentype in ChildrenListobj) { 	// step through all direct children
+			
+			/*for(childrentype in ChildrenListobj) { 	// step through all direct children
+				ChildrenListobjLoop(childrentype);
+			}*/
+			
+			var ChildrenListobjLength=Object.keys(ChildrenListobj).length;
+			if (ChildrenListobjLength !== 0) {         
+				(function recurse (cnt) {
+					var childrentype=ChildrenListobj[cnt];
+					ChildrenListobjLoop(childrentype);
+					cnt++;
+					if (cnt<ChildrenListobjLength) {recurse(cnt)};
+				})( 0 ); //recurse end
+			} // length end
+			
+			function ChildrenListobjLoop(childrentype){
 				editflag='false';
 				attr = ChildrenListobj[childrentype]; 	// onetoone or onetomany?  -left side of ChildrenListobj is the dto name
 				proxyprinttodiv('Function AddMaster : process this child object childrentype + attr', childrentype+' '+attr);
@@ -973,7 +985,21 @@
 			proxyprinttodiv('Function AddMaster : RelatedListdto - 111, dto for current child, now determine if number or not A/B' , RelatedListdto);
 
 			if (Object.keys(parameterindexobj).length !== 0) {
-				for (var currentchild in parameterindexobj) {
+				/*for (var currentchild in parameterindexobj) {
+					ParameterindexobjLoop(currentchild);
+				}*/
+				
+				var parameterindexobjLength=Object.keys(parameterindexobj).length;
+				if (parameterindexobjLength !== 0) {         
+					(function recurse (cnt) {
+						var currentchild=parameterindexobj[cnt];
+						ParameterindexobjLoop(currentchild);
+						cnt++;
+						if (cnt<parameterindexobjLength) {recurse(cnt)};
+					})( 0 ); // recurse end
+				} // length end
+				
+				function ParameterindexobjLoop(currentchild){
 					proxyprinttodiv('Function AddMaster : childrenttype.currentchild - 222, process this number first, look up in widlist', childrentype+'.'+currentchild);
 					SplitParameters = MatchPrefixDelete(RelatedListParameters, childrentype+'.'+currentchild);	// separate parameters to those that start with curr number
 					ParametersToAdd = SplitParameters.match;
@@ -982,7 +1008,7 @@
 					//if (ParametersToAdd.length!==0) {		****
 					if (countKeys(ParametersToAdd)!==0) {
 						widtoadd='';
-						if ((editflag=='true') && (widlist!="")) {
+						if ((editflag='true') && (widlist!="")) {
 							if (widlist[currentchild]!==undefined) {   // removed -1
 								for (var widName in widlist[currentchild]) {  // removed -1
 									widtoadd=widName;
