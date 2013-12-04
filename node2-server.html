@@ -1,0 +1,504 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Node-2-Server</title>
+    <meta charset="utf-8">
+    <meta name="description" content="getWid">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="./jquery.min.js" type="text/javascript"></script>
+    <!-- Local copies of bootstrap -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+	
+	
+    <script src="config-local-server.js"></script>
+    <script src="et-utils.js"></script>
+    <script src="executethis.js"></script>
+<!--
+	<script src="et-testing.js" type="text/javascript"></script>
+
+	<script src="et-get.js" type="text/javascript"></script>
+	<script src="et-add.js" type="text/javascript"></script>
+	<script src="et-query.js" type="text/javascript"></script>
+    <script src="et-local.js" type="text/javascript"></script>
+
+	<script src="et-test.js" type="text/javascript"></script>
+	<script src="et-unit_tests.js" type="text/javascript"></script>
+	<script src="cody.js" type="text/javascript"></script>
+-->
+	
+
+<style  type="text/css">
+        body {
+        padding-top: 15px;
+        padding-bottom: 20px;
+        background-color: #fce7bd;
+    }
+
+	#storageSpaceBar {
+    	background-color: #000000;
+  	  	color:#FFFFFF; 
+	}
+
+	#storageSpaceValue {
+	    padding: 3px;
+	    margin-bottom: 5px;
+	    background-color: #7BA1E2; 
+	    width: 0%;
+	}
+</style>
+<script type="text/javascript">
+
+// This example fires without a callback
+function test4(params) {
+	alert ("test4 fired with these params:\n" + JSON.stringify(params));
+	return params;
+}
+	// storage is the total possible in local storage 
+	//http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+	// A formula for this is var storage = 1024 * 1024 * 5 - unescape(encodeURIComponent(JSON.stringify(localStorage))).length;
+	var storage = 5229349;
+	// localStorage.setItem("totalStorage", storage);
+	var storageSpace = storage;//localStorage.getItem("totalStorage");
+	var currentStorageSpace = 1024 * 1024 * 5 - unescape(encodeURIComponent(JSON.stringify(localStorage))).length; 
+	var percentageLeft = Math.round((currentStorageSpace / storageSpace) * 100);
+	function updateMemory () {
+		$('#storageSpaceValue').css('width', percentageLeft + "%");
+		$('#storageSpaceText').text("Remaining Storage: " + percentageLeft + "%  --  Actual bytes used: " + (storageSpace - currentStorageSpace));
+	}
+</script>
+
+</head>
+<body>
+<!-- 
+<div id='storageSpaceBar'>
+   	<div id='storageSpaceValue'>
+      <div id='storageSpaceText'></div>
+   </div>
+</div>
+--> 
+
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-12'>
+			<label>Function: </label>
+			<input id='function_to_run' size='20' value=''>
+			<input id='execute_function' class='btn btn-success' type='button' value='Run Function'/>
+			<label>Debug on ? </label><input type='checkbox' id='debugon'>
+			<label id='test_result_message' style='padding-left: 6em;'></label>
+			<img id='working_gif' src='./waiting.gif' style='display:none'>
+	 		<!-- <input id='mybutton' class='btn btn-warning' type='button' value='Show/Hide Local Storage'/>  -->
+		</div> <!-- end of col-md-12> -->
+	</div> <!-- end of row -->
+	<br>
+    <div class='row'>   
+	    <div class="col-md-12">
+	        <span class="label label-default well_hider">Local Storage Wids</span>
+	            <div class="well" style='display: block;'>
+	            	<pre id="divwidsdisplay_from_local_storage">---------</pre>
+	            </div>
+		</div> <!-- end of col-md-6 -->
+	</div> <!-- end row -->
+	<br>
+
+<!--	<div id="divwidsdisplay" style='display: none;'>Wids</div> -->
+	 <div class='row'>   
+	    <div class="col-md-12">
+	        <span class="label label-default well_hider">locatStore memory object's JSON property</span>
+	            <div class="well" style='display: block;'>
+	            	<pre id="divwidsdisplay_from_memory">---------</pre>
+	            </div>
+		</div> <!-- end of col-md-6 -->
+	</div> <!-- end row -->
+	<br>
+	<div>
+	<!--
+		<span class='test_example'>
+			<b>Function Parameters :</b></br>
+		</span>
+
+		<span class='test_content' style='display: none;'></br>
+			<textarea rows="5" cols="100" id="function_parameters">{"executethis":"querywid", "mongowid":["abcWid","qrsWid"],"mongorelationshiptype":"attributes", "mongorelationshipdirection":"forward","mongorelationshipmethod":"all","mongowidmethod":"orange"}</textarea>
+		</span>
+-->
+		 <div class='row'>   
+		    <div class="col-md-12">
+		        <span class="label label-default well_hider">Function Parameters :</span>
+		            <div class="well" style='display: none;'>
+		            	<textarea id="function_parameters" class='test_content col-md-12 col-sm-12' rows='3'></textarea>
+		            </div>
+			</div> <!-- end of col-md-6 -->
+		</div> <!-- end row -->
+
+
+	</div>
+	<br>
+	<input class='btn btn-mini btn-info' type="button" value="Execute This" onclick="javascript:testexecutethis() "/>
+	<input class='btn btn-mini btn-info' type="button" value="getwidmaster" onclick="javascript:testgetwidmaster()"/>
+	<input class='btn btn-mini btn-info' type="button" value="addwidmaster" onclick="javascript:testaddwidmaster()"/>
+
+	<input class='btn btn-mini btn-info' type="button" value="ConvertToDOT" onclick="javascript:testconverttodot()" style='float:right;'/>
+	<input class='btn btn-mini btn-info' type="button" value="ConvertFromDOT" onclick="javascript:testconvertfromdot()" style='float:right;'/><br><br>
+	<div class='row'>
+	    <div class="col-md-6">
+	        <span class="label label-default well_hider">Function Output</span>
+	            <div class="well"><pre id="Function_Output">empty</pre></div>
+		</div> <!-- end of col-md-6 -->
+		<div class="col-md-6">
+	        <span class="label label-default well_hider">Result Div</span>
+	            <div class="well"><pre id="resultDiv">---------</pre></div>
+		</div> <!-- end of col-md-6 -->
+	</div> <!-- end row -->
+	<br>
+	<!-- <div id = "Function_Output"></div> this is replaced above -->
+
+    <div class="col-md-12">
+        <span class="label label-default well_hider">DivPrint Output</span>
+            <div class="well"><pre id="divprint">---------</pre></div>
+	</div> <!-- end of col-md-12 -->
+
+</div> <!-- end container -->
+<script>
+// http://www.2ality.com/2013/06/basic-javascript.html 
+// <input type="button" value="Raw Mongo Query" onclick="javascript:testrawmongoquery();" />
+//<input type="button" value="testDataQuery" onclick="javascript:testQueryWid ();" />
+// <input type="button" value="MongoDataQuery" onclick="javascript:testMongoQuery();" />
+// This is for the funcitonality of the testing screen itself
+$('#mybutton').click(function() {
+  if ($('#divwidsdisplay').css('display') == 'block'){
+    $('#divwidsdisplay').hide('slow');
+  }
+  else{
+  	displayAllWids();
+    $('#divwidsdisplay').show('slow');
+  }
+});
+
+// This is for the funcitonality of the testing screen itself
+$('.well_hider').click(function() {
+  var test = $(this).next('.well');
+  if ($(test).css('display') != 'none'){
+    $(test).hide('slow');
+  }
+  else{
+  	displayAllWids();
+    $(test).show('slow');
+  }
+});
+
+// This will run activate all the passing tests to insure they still work
+//[{"executethis":"query","query": {"$or": [{"wid":"joetestwid" }]}}]
+$('#runAllTests').click(function() {
+	RerunPassingTests();
+});
+
+$('#debugon').change(function() {
+	//alert('The checkbox changed');
+	if($('#debugon').is(':checked')) {	
+		//alert('true');
+		Debug = 'true';
+	} else {
+		//alert('false');
+		Debug = 'false';
+	}
+})
+
+//This defines how data is stored and retrieved with local storage.
+//clearLocalStorage()
+$(document).ready(function() {
+
+	Debug = 'false';
+	// bootprocess();
+});
+
+var result = "";
+
+$('#execute_function').click(function() {
+	// bootprocess();
+	localStorage.clear();
+	result = "";
+	$('#resultDiv').text("");
+	$('#test_result_message').text("");
+	$('#divprint').text("");
+
+	var function_to_execute = $('#function_to_run').val();
+	var p = {"executethis":function_to_execute};
+	// var result = executethis({"executethis":function_to_execute}); // executethis({},function_to_execute)
+
+	execute({"executethis":function_to_execute}, show_function_output);
+
+ //  	var result_count = Object.keys(result).length;
+
+	// // var y = verifysummary("test_results");
+	// var y = verifysummary_local(result);
+	// if (result.hasOwnProperty('executethis') && result_count == 1) {
+	// 	alert ('Something when wrong with the test...all your function returned was ' + JSON.stringify(result));
+	// } else if (y['resultwid'] == "PASS" || y['resultwid'] == "FAIL") { 
+	// 	showPassFail(y) 
+	// };
+
+	// $('#Function_Output').text(JSON.stringify(result));
+
+	// if (exports.environment == 'local') displayAllWids();
+	// if ((typeof localStore) !== "undefined") {
+	// 	displaylocalStore();
+	// } else {
+	// 	document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
+	// }
+});
+
+// function call1(p1) {
+// 	return p1;
+// }
+
+function show_function_output (x) {
+	$('#Function_Output').text(JSON.stringify(x));
+	var result = x;
+	var result_count = Object.keys(result).length;
+
+	// var y = verifysummary("test_results");
+	var y = verifysummary_local(result);
+	if (result.hasOwnProperty('executethis') && result_count == 1) {
+		alert ('Something when wrong with the test...all your function returned was ' + JSON.stringify(result));
+	} else if (y['resultwid'] == "PASS" || y['resultwid'] == "FAIL") { 
+		showPassFail(y) 
+	};
+
+	$('#Function_Output').text(JSON.stringify(result));
+
+	if (exports.environment == 'local') displayAllWids();
+	if ((typeof localStore) !== "undefined") {
+		displaylocalStore();
+	} else {
+		document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
+	}
+}
+
+$('#rerun').click(function() {
+	alert('run it again');
+	executelist();
+	updateMemory();
+})
+
+// LM: Please leave this here
+// $(document).keypress(function(e) {
+//     if(e.which == 13) {
+//     };
+// });
+
+function showPassFail (result) {
+
+	document.getElementById("test_result_message").innerHTML="";
+	if (result['resultwid'] == 'PASS') {
+		document.getElementById("test_result_message").style.color="green";
+		document.getElementById("test_result_message").style.fontSize="250%";
+		document.getElementById("test_result_message").innerHTML="PASS";
+	} else 
+	if (result['resultwid'] == 'FAIL') {
+		document.getElementById("test_result_message").style.color="red";
+		document.getElementById("test_result_message").style.fontSize="250%";
+		document.getElementById("test_result_message").innerHTML="FAIL";
+	} 
+}
+
+function testgetwidmaster() {
+	document.getElementById("divprint").innerHTML = "";
+	try {
+		var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	} catch (e) {
+		console.error("JSON Parsing error:", e);
+		alert("JSON Parsing error:", e);
+		return;
+	}
+
+	widParameters["executethis"] = "getwidmaster";
+	var getwidresult = execute(widParameters, show_function_output);
+	// x = window['execute']
+	// var getwidresult = executethis(widParameters, x);
+	// Display_Output(getwidresult);
+}
+
+function testaddwidmaster() {
+	document.getElementById("divprint").innerHTML = "";
+	try {
+		var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	} catch (e) {
+		console.error("JSON Parsing error:", e);
+		alert("JSON Parsing error:", e);
+		return;
+	}
+	
+	widParameters["executethis"] = "addwidmaster";
+	var getwidresult = execute(widParameters, show_function_output);
+
+	// x = window['execute']
+	// var getwidresult = executethis(widParameters, x);
+	// Display_Output(getwidresult);
+}
+//***************************************************************
+// function testrawmongoquery() {
+// 	document.getElementById("divprint").innerHTML = "";
+
+// 	var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	
+// 		widParameters["executethis"] = "addwidmaster";
+
+// 	var getwidresult = executethis(widParameters);
+// 	updateMemory();
+// 	Display_Output(getwidresult);
+
+//       	execute(JSON.parse($("#function_parameters").val()),function(data) {
+//         doAfterTesting(data);
+//     }); 
+// }
+
+// function doAfterTesting(response){
+//   alert('>>> from client code >>> '+JSON.stringify(response));
+//   $('div#resultDiv').html('<p>'+ JSON.stringify(response) +'</p>');
+// }
+//****************************************************************
+
+function testexecutethis(params, Display_Output) {
+	try {
+		var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+	} catch (e) {
+		console.error("JSON Parsing error:", e);
+		alert("JSON Parsing error:", e);
+		return;
+	}
+	var getwidresult = execute(widParameters, show_function_output);
+}
+
+// function testQueryWid() {
+// 	document.getElementById("divprint").innerHTML = "";
+// 	//var widParameters = {"relationshiprawmongoquery":"set1", "mongotype":"ABC", "mongofilterrawquery":"set1", "mongorelationshipdirection":"forward", "mongorelationshiptype":"attributes", "mongorelationshipmethod":"XYZ", "mongoaggregation":"mongoaggregationvalue", "mongosetlimit":12345, "mongoreturncount":123, "mongoexplain":456, "mongosize":789};
+// 	var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+// 	var getwidresult = relationShipQuery(widParameters);
+// 	updateMemory();
+// 	Display_Output(getwidresult);
+// }
+
+// function testMongoQuery() {
+//     document.getElementById("divprint").innerHTML = "";
+//     var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+   
+// 		widParameters["executethis"] = "MongoDataQuery";
+
+//     var getwidresult = execute(widParameters);
+//     updateMemory();
+// 	Display_Output(getwidresult);
+// }
+
+function testconverttodot() {
+    document.getElementById("divprint").innerHTML = "";
+    var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+    widParameters['executethis'] = ConvertToDOTdri;
+	var getwidresult = execute(widParameters);
+
+	Display_Output(getwidresult);
+    //printToDiv('Function testconverttodot convertedResults: ',  convertedResults);
+}
+
+function testconvertfromdot() {
+    document.getElementById("divprint").innerHTML = "";
+    var widParameters = JSON.parse(document.getElementById("convertfromdotparameters").value);
+    widParameters['executethis'] = ConvertFromDOTdri;
+	var getwidresult = execute(widParameters);
+
+	Display_Output(getwidresult);
+    // printToDiv('Function testconverttodot convertedResults: ',  convertedResults);
+}
+
+function Display_Output(data) {
+	document.getElementById("Function_Output").innerHTML =  "";
+	text = "<br><span><em>Function Output:</em><br><pre style='background: #D1D5D5; color: #339300;'>" + JSON.stringify(data) + "'</pre><br></span>";
+	//$('#Function_Output').text(text);
+	document.getElementById("Function_Output").innerHTML =  text;
+}
+
+function displayAllWids() {
+	document.getElementById("divwidsdisplay_from_local_storage").innerHTML = "";
+	var html = "";
+	for(var key in localStorage) {
+		//if(key.indexOf(widMasterKey) == 0){
+			html += document.getElementById("divwidsdisplay_from_local_storage").innerHTML;
+			html += "<label style='color: red; font-size: 85%;'>" + key + "</label>   ";
+			// html += "<label style='color: purple; font-size: 85%;'>" + JSON.stringify(getFromLocalStorage(key)) + "</label><br>";
+			html += "<label style='color: purple; font-size: 85%;'>" + localStorage.getItem(key) + "</label><br>";
+			html += "<br>";
+	}
+	document.getElementById("divwidsdisplay_from_local_storage").innerHTML =  html;
+}
+
+function displaylocalStore () {
+	document.getElementById("divwidsdisplay_from_memory").innerHTML = "";
+	var html = "";
+	var wid_storage = localStore.json;
+	for(var key in wid_storage) {
+		html += document.getElementById("divwidsdisplay_from_memory").innerHTML;
+		html += "<label style='color: red; font-size: 85%;'>" + key + "</label>   ";
+		var value = wid_storage[key];
+
+		html += "<label style='color: purple; font-size: 85%;'>" + JSON.stringify(value) + "</label><br>";
+
+		html += "<br>";
+	}
+	document.getElementById("divwidsdisplay_from_memory").innerHTML =  html;
+}
+
+// Outputs data to screen and console
+exports.printToDiv = printToDiv = function(text, obj, debugone){
+	if (debuglevel === undefined) var debuglevel = 20;
+	if (!debugone) {debugone=-1};
+	if ((Debug == 'true') || (debuglevel==debugone) || (debugone==99)) {
+
+	//if((debugone !== undefined) || (Debug=='true')) {
+		printText	= '<pre>'+ text+'<br/>' + JSON.stringify(obj) + '</pre>';
+		console.log(text);
+		console.log(obj);
+		document.getElementById('divprint').innerHTML = document.getElementById('divprint').innerHTML + printText; //append(printText);
+	}
+}
+
+// use these to clear out the test page...or just reload the page
+function cccc () {testclearstorage();};
+function ccc () {$('#divprint').text("");};
+function cc () {
+	locatStore.json = {};
+	cccc();
+	ccc();
+	$('#test_result_message').text("");
+};
+
+
+exports.verifysummary_local = verifysummary_local = function verifysummary_local(resultsobject) {
+
+	var testfailflag = "false";
+	if (resultsobject === undefined) {
+		}
+	else {
+	// var resultsobject = getfromlocal({'wid': resultwid});
+	if (resultsobject !== undefined) {
+		for (var result in resultsobject) {
+			// alert(result);
+			if (resultsobject[result] == "FAIL" || resultsobject[result] != "PASS" && resultsobject[result] != {}) {
+				testfailflag='true';
+				}
+			}
+		} 
+	}
+
+	// The ultimate pass/fail	
+	if (testfailflag == 'false') {
+		alert('Pass');
+		return {"resultwid":'PASS'}
+	} else {
+		alert('Fail');
+		return {"resultwid":'FAIL'}
+	}
+}
+
+</script>
+</body>
+</html>

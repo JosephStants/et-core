@@ -18,8 +18,12 @@ exports.querywid = querywid = function querywid(parameters, callback) { // can c
 	delete parameters['executethis']; //** added 11/2
 
 	var x = window['mongoquery'];
-	if ((typeof config !== "undefined") && (config.configuration.environment === "local")) //{return mongoquery(parameters)}
-		 {return executethis(parameters, x);}
+	if (exports.environment=== "local") {
+        if (callback instanceof Function) { mongoquery(parameters, callback); }
+        else { return executethis(parameters, x); }
+    }
+    else
+    {
 
 // if (parameters['mongorawquery']) {
 // 		return mongoquery(parameters);
@@ -58,7 +62,7 @@ exports.querywid = querywid = function querywid(parameters, callback) { // can c
         if (callback instanceof Function) { callback({success:'false'}); }
         else { return {success:'false'}; }
     }
-    
+} //else  
 //	return output;
 
 	// nothing below should run
@@ -175,6 +179,7 @@ exports.querywid = querywid = function querywid(parameters, callback) { // can c
 //    queryresults = executethis(output, mongoquery);
 //    //queryresults=mongoquery(output,target,callback);
 //    return queryresults; // whatever happens, return the output
+
 } // End of MongoDataQuery
 
 // Use the mQueryString to call on mongo with it
