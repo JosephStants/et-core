@@ -443,8 +443,8 @@ function testexecutethis() {
 function testconverttodot() {
 	document.getElementById("divprint").innerHTML = "";
     var widParameters = JSON.parse(document.getElementById("function_parameters").value);
-    widParameters['executethis'] = ConvertToDOTdri;
-	var getwidresult = execute(widParameters);
+    // widParameters['executethis'] = ConvertToDOTdri;
+	var getwidresult = ConvertToDOTdri(widParameters);
 	Display_Output(getwidresult);
 
  //    document.getElementById("divprint").innerHTML = "";
@@ -457,9 +457,9 @@ function testconverttodot() {
 
 function testconvertfromdot() {
     document.getElementById("divprint").innerHTML = "";
-    var widParameters = JSON.parse(document.getElementById("convertfromdotparameters").value);
-    widParameters['executethis'] = ConvertFromDOTdri;
-	var getwidresult = execute(widParameters);
+    var widParameters = JSON.parse(document.getElementById("function_parameters").value);
+    // widParameters['executethis'] = ConvertFromDOTdri;
+	var getwidresult = ConvertFromDOTdri(widParameters);
 	Display_Output(getwidresult);
 
  //    document.getElementById("divprint").innerHTML = "";
