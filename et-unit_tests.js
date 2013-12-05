@@ -978,7 +978,7 @@ exports.testa = testa = function testa (params, callback) {
 
 exports.testb_setup = testb_setup = function testb_setup (params, callback) {
     executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
-    // executetest("getwidmaster", {"wid":"sounddto"}, "get_sounddto_result", "");
+    executetest("getwidmaster", {"wid":"sounddto"}, "get_sounddto_result", "");
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 

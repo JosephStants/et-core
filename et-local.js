@@ -46,8 +46,9 @@ exports.mongoquery = mongoquery = function mongoquery(queryString, callback) {
 
 	}
 }
-
+ 
 function querywidlocal(sq, callback){
+
 	var widInput=sq["mongowid"];
 	var mongorelationshiptype=sq["mongorelationshiptype"];
 	var mongorelationshipmethod=sq["mongorelationshipmethod"];
@@ -55,6 +56,7 @@ function querywidlocal(sq, callback){
 	var mongowidmethod=sq["mongowidmethod"];
 	var convertmethod=sq["convertmethod"];
 	var dtotype=sq["dtotype"];
+
 	var returnfromSimpleQuery=[];
 	var enhancedreturn;
 	var outobject=[];
@@ -66,206 +68,89 @@ function querywidlocal(sq, callback){
 	proxyprinttodiv('Function simpleQuery in : mongowidmethod',  mongowidmethod,30);
 	proxyprinttodiv('Function simpleQuery in : convertmethod',  convertmethod,30);	
 	proxyprinttodiv('Function simpleQuery in : dtotype',  dtotype,30);		
-
 	if(mongorelationshipdirection == "forward") {
 		// step through local storage looking for
 	   	var widset=getwidcopy(); // get a copy of all local storage ***
-	   	var widsetlength=0;
-	   	var cnt=0;
 	   //	enhancedreturn=widset; // remove
 	   //}
 		proxyprinttodiv('Function simpleQuery in : widset',  widset, 30);
 	   	//for (var key in localStorage){ //***
+	 	for (var widkey in widset){ 	
+			//var myvalue = JSON.parse(localStorage.getItem(key)); //**
+			proxyprinttodiv('Function simpleQuery in : widkey',  widkey,30);
+			//var myvalue = getfrommongo({wid:widkey});
 
-            var widsetlength=Object.keys(widset).length;
-            if (widsetlength !== 0) {         
-                (function recurse2 (cnt) {
-                    var widkey=widset[cnt];
-                    cnt++;
-                    var executeobject={};
-                        executeobject["executethis"]="getwid"; 
-                        executeobject["wid"]=widkey;
-                        execute(executeobject, function (myvalue){
+			var executeobject={};
+			executeobject["wid"]=widkey;
+			//var x = window['getfrommongo'];
+			var x = window['getwid'];
+			//var myvalue = executethis({wid:widkey}, getfrommongo);
+			//var myvalue = executethis(executeobject, getfrommongo);
+			var myvalue = executethis(executeobject, x);
+			//proxyprinttodiv('Function simpleQuery in : myvalue',  myvalue);
+			proxyprinttodiv('Function simpleQuery in : myvalue',  myvalue);
+			if (myvalue["primarywid"] == widInput) {
+               var widName = myvalue["primarywid"];
+			   var key = myvalue["secondarywid"];
+			     proxyprinttodiv('Function simpleQuery in : widName',  widName, 30);
+			     proxyprinttodiv('Function simpleQuery in : key',  key, 30);
+			   //var value = getfrommongo({wid:key}); // , dtotype:mongowidmethod
+				executeobject={};
+				executeobject["wid"]=key;
+			   //var value = executethis({wid:key}, getfrommongo);
+			   proxyprinttodiv('Function simpleQuery in : executeobject',  executeobject, 30);
+			   proxyprinttodiv('Function simpleQuery in : x fn', x.name, 30);
+			   var value = executethis(executeobject, x);
+			   //var value = executethis(executeobject, getfrommongo);
+			   proxyprinttodiv('Function simpleQuery in : value',  value, 30);
+               delete value.wid;
+               var resultObj = {};
+			   resultObj[key]= value;
 
-						proxyprinttodiv('Function simpleQuery in : myvalue',  myvalue);
-						if (myvalue["primarywid"] == widInput) {
-			               var widName = myvalue["primarywid"];
-						   var key = myvalue["secondarywid"];
-						     proxyprinttodiv('Function simpleQuery in : widName',  widName, 30);
-						     proxyprinttodiv('Function simpleQuery in : key',  key, 30);
-						   //var value = getfrommongo({wid:key}); // , dtotype:mongowidmethod
-							executeobject={};
-							executeobject["executethis"]="getwid"; 
-							executeobject["wid"]=key;
-						   //var value = executethis({wid:key}, getfrommongo);
-						   proxyprinttodiv('Function simpleQuery in : executeobject',  executeobject, 30);
-						   proxyprinttodiv('Function simpleQuery in : x fn', x.name, 30);
-
-						   var value;
-						   //var value = executethis(executeobject, x);
-						   execute(executeobject, function (value){
-
-							   //var value = executethis(executeobject, getfrommongo);
-							   proxyprinttodiv('Function simpleQuery in : value',  value, 30);
-				               delete value.wid;
-				               var resultObj = {};
-							   resultObj[key]= value;
-
-							   	//proxyprinttodiv('Function simpleQuery in : resultObj I',  resultObj);		  
-								if ((value["metadata.method"] === undefined) || (value["metadata.method"] == "")) {	
-									widdto = "";
-								}else {
-									widdto = value["metadata.method"]
-								}
-
-								// changed 10/30 if ((mongowidmethod !== undefined) && (mongowidmethod == widdto)) {
-								if (((mongowidmethod !== undefined) && (mongowidmethod == widdto)) || (mongowidmethod=="")) {
-									//proxyprinttodiv('Function simpleQuery in : resultObj',  resultObj);
-									returnfromSimpleQuery.push(resultObj);
-									}
-								}); // execute
-
-						 	} // if myvalue
-						}); // execute
-                        if (cnt<widsetlength) {recurse2(cnt)};
-                    })( 0 );
-                 } // length
-            } // forward
-
-			proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery before', returnfromSimpleQuery, 30);
-			//proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery',  returnfromSimpleQuery);
-			if (returnfromSimpleQuery.length>0) {
-			returnfromSimpleQuery=returnfromSimpleQuery.sort(function (aObj, bObj) {
-					var a = getAttributeByIndex(aObj, 0);
-					var b = getAttributeByIndex(bObj, 0);
-					if (a < b) return -1;
-					if (a > b) return 1;
-					return 0;
-				});
+			   	//proxyprinttodiv('Function simpleQuery in : resultObj I',  resultObj);		  
+				if ((value["metadata.method"] === undefined) || (value["metadata.method"] == "")) {	
+					widdto = "";
+				}else {
+					widdto = value["metadata.method"]
 				}
-			proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery aftersort', returnfromSimpleQuery, 30);
-			proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery length', returnfromSimpleQuery.length, 30);
-			if (returnfromSimpleQuery.length>0) {
-				if (mongorelationshipmethod=='first') {outobject.push(returnfromSimpleQuery[0]);}
-				if (mongorelationshipmethod=='last') {outobject.push(returnfromSimpleQuery[returnfromSimpleQuery.length-1]);}
-				if (mongorelationshipmethod=='all') {outobject=returnfromSimpleQuery;}
-				}
-			proxyprinttodiv('Function simpleQuery in : enhancedreturn before',  outobject, 30);
-			if ((!outobject) || (outobject==[]) || 
-				(outobject===null) || (returnfromSimpleQuery.length==0)){outobject.push({"":""});}
-			if (Object.keys(outobject).length == 0) {outobject.push({"":""});}
-			proxyprinttodiv('Function simpleQuery in : enhancedreturn after',  outobject, 30);
-			//return enhancedreturn;
-			//enhancedreturn.push({'a':'b'});
-			proxyprinttodiv('Function simpleQuery in : callback',  String(callback),30);	
-			callback(outobject);
-} // querywidlocal
 
- 
-// function querywidlocal(sq, callback){
-
-// 	var widInput=sq["mongowid"];
-// 	var mongorelationshiptype=sq["mongorelationshiptype"];
-// 	var mongorelationshipmethod=sq["mongorelationshipmethod"];
-// 	var mongorelationshipdirection=sq["mongorelationshipdirection"];
-// 	var mongowidmethod=sq["mongowidmethod"];
-// 	var convertmethod=sq["convertmethod"];
-// 	var dtotype=sq["dtotype"];
-
-// 	var returnfromSimpleQuery=[];
-// 	var enhancedreturn;
-// 	var outobject=[];
-
-// 	proxyprinttodiv('Function simpleQuery in : widInput',  widInput, 30);
-// 	proxyprinttodiv('Function simpleQuery in : mongorelationshiptype',  mongorelationshiptype,30);
-// 	proxyprinttodiv('Function simpleQuery in : mongorelationshipmethod',  mongorelationshipmethod,30);
-// 	proxyprinttodiv('Function simpleQuery in : mongorelationshipdirection',  mongorelationshipdirection,30);			
-// 	proxyprinttodiv('Function simpleQuery in : mongowidmethod',  mongowidmethod,30);
-// 	proxyprinttodiv('Function simpleQuery in : convertmethod',  convertmethod,30);	
-// 	proxyprinttodiv('Function simpleQuery in : dtotype',  dtotype,30);		
-// 	if(mongorelationshipdirection == "forward") {
-// 		// step through local storage looking for
-// 	   	var widset=getwidcopy(); // get a copy of all local storage ***
-// 	   //	enhancedreturn=widset; // remove
-// 	   //}
-// 		proxyprinttodiv('Function simpleQuery in : widset',  widset, 30);
-// 	   	//for (var key in localStorage){ //***
-// 	 	for (var widkey in widset){ 	
-// 			//var myvalue = JSON.parse(localStorage.getItem(key)); //**
-// 			proxyprinttodiv('Function simpleQuery in : widkey',  widkey,30);
-// 			//var myvalue = getfrommongo({wid:widkey});
-
-// 			var executeobject={};
-// 			executeobject["wid"]=widkey;
-// 			//var x = window['getfrommongo'];
-// 			var x = window['getwid'];
-// 			//var myvalue = executethis({wid:widkey}, getfrommongo);
-// 			//var myvalue = executethis(executeobject, getfrommongo);
-// 			var myvalue = executethis(executeobject, x);
-// 			//proxyprinttodiv('Function simpleQuery in : myvalue',  myvalue);
-// 			proxyprinttodiv('Function simpleQuery in : myvalue',  myvalue);
-// 			if (myvalue["primarywid"] == widInput) {
-//                var widName = myvalue["primarywid"];
-// 			   var key = myvalue["secondarywid"];
-// 			     proxyprinttodiv('Function simpleQuery in : widName',  widName, 30);
-// 			     proxyprinttodiv('Function simpleQuery in : key',  key, 30);
-// 			   //var value = getfrommongo({wid:key}); // , dtotype:mongowidmethod
-// 				executeobject={};
-// 				executeobject["wid"]=key;
-// 			   //var value = executethis({wid:key}, getfrommongo);
-// 			   proxyprinttodiv('Function simpleQuery in : executeobject',  executeobject, 30);
-// 			   proxyprinttodiv('Function simpleQuery in : x fn', x.name, 30);
-// 			   var value = executethis(executeobject, x);
-// 			   //var value = executethis(executeobject, getfrommongo);
-// 			   proxyprinttodiv('Function simpleQuery in : value',  value, 30);
-//                delete value.wid;
-//                var resultObj = {};
-// 			   resultObj[key]= value;
-
-// 			   	//proxyprinttodiv('Function simpleQuery in : resultObj I',  resultObj);		  
-// 				if ((value["metadata.method"] === undefined) || (value["metadata.method"] == "")) {	
-// 					widdto = "";
-// 				}else {
-// 					widdto = value["metadata.method"]
-// 				}
-
-// 				// changed 10/30 if ((mongowidmethod !== undefined) && (mongowidmethod == widdto)) {
-// 				if (((mongowidmethod !== undefined) && (mongowidmethod == widdto)) || (mongowidmethod=="")) {
-// 					//proxyprinttodiv('Function simpleQuery in : resultObj',  resultObj);
-// 					returnfromSimpleQuery.push(resultObj);
-// 					}
-// 			 	}
-// 			// }
-// 		}
-// 	}
-// 	proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery before', returnfromSimpleQuery, 30);
-// 	//proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery',  returnfromSimpleQuery);
-// 	if (returnfromSimpleQuery.length>0) {
-//     returnfromSimpleQuery=returnfromSimpleQuery.sort(function (aObj, bObj) {
-//             var a = getAttributeByIndex(aObj, 0);
-//             var b = getAttributeByIndex(bObj, 0);
-//             if (a < b) return -1;
-//             if (a > b) return 1;
-//             return 0;
-//  		});
-//     	}
-//     proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery aftersort', returnfromSimpleQuery, 30);
-//     proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery length', returnfromSimpleQuery.length, 30);
-//     if (returnfromSimpleQuery.length>0) {
-//     	if (mongorelationshipmethod=='first') {outobject.push(returnfromSimpleQuery[0]);}
-//    	 	if (mongorelationshipmethod=='last') {outobject.push(returnfromSimpleQuery[returnfromSimpleQuery.length-1]);}
-// 		if (mongorelationshipmethod=='all') {outobject=returnfromSimpleQuery;}
-// 		}
-// 	proxyprinttodiv('Function simpleQuery in : enhancedreturn before',  outobject, 30);
-// 	if ((!outobject) || (outobject==[]) || 
-// 		(outobject===null) || (returnfromSimpleQuery.length==0)){outobject.push({"":""});}
-// 	if (Object.keys(outobject).length == 0) {outobject.push({"":""});}
-// 	proxyprinttodiv('Function simpleQuery in : enhancedreturn after',  outobject, 30);
-// 	//return enhancedreturn;
-// 	//enhancedreturn.push({'a':'b'});
-// 	proxyprinttodiv('Function simpleQuery in : callback',  String(callback),30);	
-// 	callback(outobject);
-// }
+				// changed 10/30 if ((mongowidmethod !== undefined) && (mongowidmethod == widdto)) {
+				if (((mongowidmethod !== undefined) && (mongowidmethod == widdto)) || (mongowidmethod=="")) {
+					//proxyprinttodiv('Function simpleQuery in : resultObj',  resultObj);
+					returnfromSimpleQuery.push(resultObj);
+					}
+			 	}
+			// }
+		}
+	}
+	proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery before', returnfromSimpleQuery, 30);
+	//proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery',  returnfromSimpleQuery);
+	if (returnfromSimpleQuery.length>0) {
+    returnfromSimpleQuery=returnfromSimpleQuery.sort(function (aObj, bObj) {
+            var a = getAttributeByIndex(aObj, 0);
+            var b = getAttributeByIndex(bObj, 0);
+            if (a < b) return -1;
+            if (a > b) return 1;
+            return 0;
+ 		});
+    	}
+    proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery aftersort', returnfromSimpleQuery, 30);
+    proxyprinttodiv('Function simpleQuery in : returnfromSimpleQuery length', returnfromSimpleQuery.length, 30);
+    if (returnfromSimpleQuery.length>0) {
+    	if (mongorelationshipmethod=='first') {outobject.push(returnfromSimpleQuery[0]);}
+   	 	if (mongorelationshipmethod=='last') {outobject.push(returnfromSimpleQuery[returnfromSimpleQuery.length-1]);}
+		if (mongorelationshipmethod=='all') {outobject=returnfromSimpleQuery;}
+		}
+	proxyprinttodiv('Function simpleQuery in : enhancedreturn before',  outobject, 30);
+	if ((!outobject) || (outobject==[]) || 
+		(outobject===null) || (returnfromSimpleQuery.length==0)){outobject.push({"":""});}
+	if (Object.keys(outobject).length == 0) {outobject.push({"":""});}
+	proxyprinttodiv('Function simpleQuery in : enhancedreturn after',  outobject, 30);
+	//return enhancedreturn;
+	//enhancedreturn.push({'a':'b'});
+	proxyprinttodiv('Function simpleQuery in : callback',  String(callback),30);	
+	callback(outobject);
+}
 
 // function addtomongo(widName, widobject) {
 // 	addToLocalStorage(widMasterKey+widName, widobject);

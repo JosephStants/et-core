@@ -178,8 +178,12 @@
 
         if ((params === undefined) || (params==="")) {params={}};
         
-        if (params['configuration'] !== undefined){
-            var incomingConfig = params['configuration'][configtarget]; // get send in config
+        if ((params['configuration'] !== undefined) && (params['configuration'][configtarget] !== undefined)){
+            var incomingConfig = [];
+            var object = params['configuration'][configtarget][0];
+            incomingConfig.push(object); // get send in config
+            // delete parms config
+            delete params['configuration'][configtarget];
             proxyprinttodiv("CreateDoList - incomingConfig ", incomingConfig, 11);
         }
 
@@ -192,9 +196,9 @@
 
             config0[configtarget] = incomingConfig;   // incomingConfig[target];  // load override 
             paramsobject = incomingConfig['params'];  // get extra parameters from incoming params config
-            params = jsonconcat(params,paramsobject); // join them with existing parameters
-            paramsobject = config0[target]['params']; // get extra parameters from config
-            params = jsonconcat(params,paramsobject); // join them with existing parameters
+            params = jsonConcat(params,paramsobject); // join them with existing parameters
+            paramsobject = config0[configtarget]['params']; // get extra parameters from config
+            params = jsonConcat(params,paramsobject); // join them with existing parameters
                         // delete from parameters configtarget
         }
 
@@ -346,6 +350,10 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     if (!targetfn instanceof Function) {
                         targetfn = window[targetfn];
                         }
+                    else if(typeof targetfn === 'string') {
+                        targetfn = window[targetfn];
+                    }
+
                     synchflag = (targetfn.length == 1);
                     break;
                     
@@ -354,7 +362,8 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     targetfn=tempobject['js'];
                     if (!targetfn instanceof Function){
                         targetfn = window[targetfn];
-                        }
+                    }
+
                     synchflag = (targetfn.length == 1);
                     break;
 
