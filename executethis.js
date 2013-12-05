@@ -178,8 +178,12 @@
 
         if ((params === undefined) || (params==="")) {params={}};
         
-        if (params['configuration'] !== undefined){
-            var incomingConfig = params['configuration'][configtarget][0]; // get send in config
+        if ((params['configuration'] !== undefined) && (params['configuration'][configtarget] !== undefined)){
+            var incomingConfig = [];
+            var object = params['configuration'][configtarget][0];
+            incomingConfig.push(object); // get send in config
+            // delete parms config
+            delete params['configuration'][configtarget];
             proxyprinttodiv("CreateDoList - incomingConfig ", incomingConfig, 11);
         }
 
@@ -346,6 +350,10 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     if (!targetfn instanceof Function) {
                         targetfn = window[targetfn];
                         }
+                    else if(typeof targetfn === 'string') {
+                        targetfn = window[targetfn];
+                    }
+
                     synchflag = (targetfn.length == 1);
                     break;
                     
@@ -354,7 +362,8 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     targetfn=tempobject['js'];
                     if (!targetfn instanceof Function){
                         targetfn = window[targetfn];
-                        }
+                    }
+
                     synchflag = (targetfn.length == 1);
                     break;
 

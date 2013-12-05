@@ -555,9 +555,9 @@ exports.ct7 = ct7 = function ct7 (params, callback) {
                 "params": {}
             }
         ]
-    }}, "c_t7_output", "");
+    }}, "ct7_output", "");
 	// params = logverify("c_unit_tests","ct7_result","ct7_output","","",{"c":"0","d":"1","executethis":"func_b","ct7":"did some alerting","g":"4","howtodooverride":"you got your hottodooverwritten"});
-	params = logverify("c_unit_tests","ct7_result","ct7_output","","",{"c":"0","d":"1","ct7":"did some alerting","g":"4"});
+	params = logverify("c_unit_tests","ct7_result","ct7_output","","",{"ct7":"did some alerting","configuration":{},"d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -652,7 +652,7 @@ exports.ct10 = ct10 = function ct10 (params, callback) {
 exports.ct11 = ct11 = function ct11 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
-	executetest("executethis", {"executethis":"func_b", "preexecute":"does_not_exist","does_not_exist_1":"func_a", "postexecute":"does_not_exist_2","does_not_exist_2":"func_c", "c":"0", "d":"1", "e":"2"}, "ct11_output", "");
+	executetest("executethis", {"executethis":"func_b", "preexecute":"does_not_exist_1","does_not_exist_1":"func_a", "postexecute":"does_not_exist_2","does_not_exist_2":"func_c", "c":"0", "d":"1", "e":"2"}, "ct11_output", "");
 	params = logverify("c_unit_tests","ct11_result","ct11_output","","",{"f":"3","h":"5","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
