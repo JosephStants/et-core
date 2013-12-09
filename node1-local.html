@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
     <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./async.js" type="text/javascript"></script>
 	
 	
     <script src="config-local.js"></script>
@@ -82,37 +83,32 @@ function test4(params) {
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-12'>
+			<input id='execute_test' class='btn btn-primary' type='button' value='Run Test'/>
+			<input id='execute_function' class='btn btn-primary' type='button' value='Run Function'/>
+			<input id='execute_server_test' class='btn btn-primary' type='button' value='Run Server Test'/>
+			<input id='execute_server_function' class='btn btn-primary' type='button' value='Run Server Function'/>
+			<input id='get_copy' class='btn btn-info' type='button' value='Copy for get wid'/>
+			<input id='add_copy' class='btn btn-info' type='button' value='Copy for add wid'/>
+			<input id='output_to_input' class='btn btn-warning' type='button' value='Output to Input'/>
+
+			<br><br>
 			<label>Function: </label>
 			<input id='function_to_run' size='20' value=''>
-			<input id='execute_function' class='btn btn-success' type='button' value='Run Function'/>
 			<label>Debug on ? </label><input type='checkbox' id='debugon'>
+<!--
 			<label>Server call ? </label><input type='checkbox' id='server_caller'>
+-->		
 			<label id='test_result_message' style='padding-left: 6em;'></label>
 	 		<!-- <input id='mybutton' class='btn btn-warning' type='button' value='Show/Hide Local Storage'/>  -->
 		</div> <!-- end of col-md-12> -->
 	</div> <!-- end of row -->
 	<br>
-    <div class='row'>   
-	    <div class="col-md-12">
-	        <span class="label label-default well_hider">Local Storage Wids</span>
-	            <div class="well" style='display: block;'>
-	            	<pre id="divwidsdisplay_from_local_storage">---------</pre>
-	            </div>
-		</div> <!-- end of col-md-6 -->
-	</div> <!-- end row -->
-	<br>
 
-<!--	<div id="divwidsdisplay" style='display: none;'>Wids</div> -->
-	 <div class='row'>   
-	    <div class="col-md-12">
-	        <span class="label label-default well_hider">locatStore memory object's JSON property</span>
-	            <div class="well" style='display: block;'>
-	            	<pre id="divwidsdisplay_from_memory">---------</pre>
-	            </div>
-		</div> <!-- end of col-md-6 -->
-	</div> <!-- end row -->
 	<br>
 	<div>
+
+
+
 	<!--
 		<span class='test_example'>
 			<b>Function Parameters :</b></br>
@@ -125,7 +121,7 @@ function test4(params) {
 		 <div class='row'>   
 		    <div class="col-md-12">
 		        <span class="label label-default well_hider">Function Parameters :</span>
-		            <div class="well" style='display: none;'>
+		            <div class="well" style='display: block;'>
 		            	<textarea id="function_parameters" class='test_content col-md-12 col-sm-12' rows='3'></textarea>
 		            </div>
 			</div> <!-- end of col-md-6 -->
@@ -135,28 +131,53 @@ function test4(params) {
 	</div>
 	<br>
 	<input class='btn btn-mini btn-info' type="button" value="Execute This" onclick="javascript:testexecutethis()"/>
-	<input class='btn btn-mini btn-info' type="button" value="getwidmaster" onclick="javascript:testgetwidmaster()"/>
-	<input class='btn btn-mini btn-info' type="button" value="addwidmaster" onclick="javascript:testaddwidmaster()"/>
 
 	<input class='btn btn-mini btn-info' type="button" value="ConvertToDOT" onclick="javascript:testconverttodot()" style='float:right;'/>
 	<input class='btn btn-mini btn-info' type="button" value="ConvertFromDOT" onclick="javascript:testconvertfromdot()"  style='float:right;'/><br><br>
+
 	<div class='row'>
-	    <div class="col-md-6">
+	    <div class="col-md-12">
 	        <span class="label label-default well_hider">Function Output</span>
 	            <div class="well"><pre id="Function_Output">---------</pre></div>
-		</div> <!-- end of col-md-6 -->
+		</div> <!-- end of col-md-12 -->
+<!--
 		<div class="col-md-6">
 	        <span class="label label-default well_hider">Result Div</span>
 	            <div class="well"><pre id="resultDiv">---------</pre></div>
-		</div> <!-- end of col-md-6 -->
+		</div> 
+-->
+
 	</div> <!-- end row -->
 	<br>
 	<!-- <div id = "Function_Output"></div> this is replaced above -->
 
-    <div class="col-md-12">
+    <div class='row'>   
+	    <div class="col-md-12">
+	        <span class="label label-default well_hider">Local Storage Wids</span>
+	            <div class="well" style='display: block;'>
+	            	<pre id="divwidsdisplay_from_local_storage">---------</pre>
+	            </div>
+		</div> <!-- end of col-md-6 -->
+	</div> <!-- end row --> 
+	<br>
+
+<!--	<div id="divwidsdisplay" style='display: none;'>Wids</div> -->
+	 <div class='row'>   
+	    <div class="col-md-12">
+	        <span class="label label-default well_hider">locatStore memory object's JSON property</span>
+	            <div class="well" style='display: block;'>
+	            	<pre id="divwidsdisplay_from_memory">---------</pre>
+	            </div>
+		</div> <!-- end of col-md-6 -->
+	</div> <!-- end row -->
+
+	<div class="col-md-12">
         <span class="label label-default well_hider">DivPrint Output</span>
             <div class="well"><pre id="divprint">---------</pre></div>
 	</div> <!-- end of col-md-12 -->
+
+
+
 
 </div> <!-- end container -->
 <script>
@@ -207,14 +228,13 @@ $('#debugon').change(function() {
 //This defines how data is stored and retrieved with local storage.
 //clearLocalStorage()
 $(document).ready(function() {
-
 	Debug = 'false';
-	// bootprocess();
+	bootprocess();
 });
 
-$('#execute_function').click(function() {
-	// bootprocess();
-	localStorage.clear();
+function execute_stuff(isTest, isServer) {
+	bootprocess();
+	// localStorage.clear();
 	$('#resultDiv').text("");
 	$('#test_result_message').text("");
 	$('#divprint').text("");
@@ -222,7 +242,8 @@ $('#execute_function').click(function() {
 
 	var my_execute_object = {"executethis":function_to_execute};
 
-	if ($('#server_caller').prop('checked')) {		
+	// if ($('#server_caller').prop('checked')) {		
+	if (isServer) {		
 		my_execute_object['configuration'] = {
 	        "midexecute": [
 	            {
@@ -240,11 +261,11 @@ $('#execute_function').click(function() {
 
 	// var y = verifysummary("test_results");
 	var y = 0; // verifysummary_local(result);
-	if (result_count > 0) y = verifysummary_local(result);
+	if (result_count > 0 && isTest) y = verifysummary_local(result);
 	// if (result.hasOwnProperty('executethis') && result_count == 1) {
-	// 	alert ('Something when wrong with the test...all your function returned was ' + JSON.stringify(result));
+	// 	alert ('Something when wrong with the test...all your function returned was ' + JSON.stringify(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScriptresult));
 	// } else 
-	if (y['resultwid'] == "PASS" || y['resultwid'] == "FAIL") { 
+	if (y['resultwid'] == "PASS" || y['resultwid'] == "FAIL" && isTest) { 
 		showPassFail(y) 
 	};
 
@@ -263,6 +284,37 @@ $('#execute_function').click(function() {
 	// } else {
 	// 	document.getElementById("divwidsdisplay_from_memory").innerHTML = "<label style='color: red; font-size: 135%;'>localStore is undefined</label>";
 	// }
+}
+
+$('#execute_test').click(function() {
+	execute_stuff(true, false);
+});
+
+$('#execute_function').click(function() {
+	execute_stuff(false, false);
+});
+
+$('#execute_server_test').click(function() {
+	execute_stuff(true, true);
+});
+
+$('#execute_server_function').click(function() {
+	execute_stuff(false, true);
+});
+
+$('#get_copy').click(function() {
+		var temp = $('#function_to_run').val();
+		$('#function_parameters').text('{"getwidmaster":"' + temp + '"}');
+});
+
+$('#add_copy').click(function() {
+		var temp = $('#function_to_run').val();
+		$('#function_parameters').text('{"addwidmaster":"' + temp + '"}');
+});
+
+$('#output_to_input').click(function() {
+		var temp = $('#Function_Output').text();
+		$('#function_parameters').val(temp);
 });
 
 function show_function_output (x) {
@@ -487,7 +539,7 @@ function testconvertfromdot() {
 
 function Display_Output(data) {
 	document.getElementById("Function_Output").innerHTML =  "";
-	text = "<br><span><em>Function Output:</em><br><pre style='background: #D1D5D5; color: #339300;'>" + JSON.stringify(data) + "'</pre><br></span>";
+	text = "<br><span><br><pre style='background: #D1D5D5; color: #339300;'>" + JSON.stringify(data) + "</pre><br></span>";
 	//$('#Function_Output').text(text);
 	document.getElementById("Function_Output").innerHTML =  text;
 }

@@ -314,6 +314,13 @@ exports.testclearstorage = testclearstorage = function testclearstorage(){
 	localStore.clear();
 };
 
+exports.testclearallstorage = testclearallstorage = function testclearallstorage() {
+    widMasterKey = "widmaster_";
+    potentialwid = 0;
+    localStore.clear();
+    localStorage.clear();
+};
+
 
 // exports.addtolocal = addtolocal = function addtolocal(widName, widobject) {
 // 	addToLocalStorage((widMasterKey + widName), widobject);
