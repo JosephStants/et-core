@@ -1,3 +1,4 @@
+// executethis is a synchronous function that calls execute
 // execute is the asynchronous version  has an etbypass option
 // executelist executes list (howToDoList and whatToDoList).  It accepts a structure as in config
 // 
@@ -16,25 +17,32 @@
       , executethis
       , etexecute;
 
-    exports.etexecute=window.etexecute = etexecute = function etexecute(params, callback) {
-        execute(params, function (results) { var err = {}; callback(err, results)});
+    exports.etexecute = window.etexecute = etexecute = function etexecute() {
+        
     }
 
-
-    exports.execute = window.execute = execute = function execute(incomingparams,callback) {
-
+    // add test ****
+    // execute method --- method called numbered (1)
+    exports.execute = window.execute = execute = function execute(incomingparams, callback) {
+        console.log('arrived in execute ' + incomingparams);
         incomingparams = toLowerKeys(incomingparams);
 
         proxyprinttodiv("execute - inboundparms",incomingparams,11);
         proxyprinttodiv("execute - callback fn ",String(callback),11);
-        console.log(' *** test2  '+ JSON.stringify(incomingparams));
 
+
+        console.log(' *** test2  '+ JSON.stringify(incomingparams));
         if ((incomingparams !== undefined) && (incomingparams["executethis"] === "test2")) {
             callback({'test2':'Reached test2 code.. execute function'});
         }
         else { 
             if ((incomingparams !== undefined) && (incomingparams['etbypass'])) {
                 proxyprinttodiv("execute - etbypass incomingparams",incomingparams,11);
+                // var executeFn = window[incomingparams["executethis"]];
+                // var result = executethis(incomingparams, x);
+                // proxyprinttodiv("execute - etbypass result",result,11);
+                // callback(result)
+
                 var x = undefined;          
                 if(incomingparams["executethis"]){
                     if (incomingparams["executethis"] instanceof Function) {
@@ -109,16 +117,13 @@
                     , funcCalled = false
                     , count = 0;
 
-                var cbfunction = function (results, results2) {
-                    funcDone = true; 
-                    if (results2) {retResult = results2}
-                             else {retResult = results};
-                    }
-
-                while(!funcDone) {
+                while (!funcDone) {
                     if(!funcCalled) {
                         funcCalled = true;
-                        targetfunction(params, cbfunction);
+                        targetfunction(params, function (results) {
+                            funcDone = true;
+                            retResult = results;
+                        });
                     }
                     count++
                     if (count>100){funcDone=true}
@@ -160,9 +165,6 @@
                     targetfunction = window[params[target]]; // get targetfunction (whole function)
                     }  // function name was passed in as string
 
-                delete params[target]; // ** moved by Roger
-                delete params[targetfunction]; // ** added by Roger
-
                 howToDoList = CreateDoList(params, target, targetfunction);       // generate list based on pre, mid, post
                 proxyprinttodiv("dothis - howToDoList ", howToDoList, 11);
                 whatToDoList =  CreateDoList(params, targetname, targetfunction); // generate list based on fn name
@@ -176,74 +178,47 @@
         } // else not test4
     } // fn
 
-        // based on a target fn and params this fn will create a sorted list of what to do -- params will be in list
-
     function CreateDoList(params, configtarget, configfn) {
-
-        if ((params === undefined) || (params==="")) {params={}};
-        if ((configtarget === undefined) || (configtarget==="")) {configtarget="executeerror"};
-        if ((configfn === undefined) || (configfn==="")) {configfn=""};
-
-        // get saved configuration
+        var paramsobject={};
+        // based on a target fn and params this fn will create a sorted list of what to do -- params will be in list
         var config0 = toLowerKeys(config.configuration); // config0 is working copy of current configuration
 
-        // If there is no config object for current target make one
-        if (typeof config0[configtarget] !== 'object') {
-            config0[configtarget] = [];
-        }   
-
-// fish out incoming configuraton
+        if ((params === undefined) || (params==="")) {params={}};
+        
         if ((params['configuration'] !== undefined) && (params['configuration'][configtarget] !== undefined)){
             var incomingConfig = [];
-            var object = params['configuration'][configtarget][0]; // needs [0]
-            object = toLowerKeys(object);
+            var object = params['configuration'][configtarget][0];
             incomingConfig.push(object); // get send in config
             // delete parms config
             delete params['configuration'][configtarget];
-            // *** delete params['configuration'][configtarget][0];????????????? or above take out?
             proxyprinttodiv("CreateDoList - incomingConfig ", incomingConfig, 11);
         }
 
         if (incomingConfig) {
-            config0[configtarget] = incomingConfig; // ** Joe - only load incoming config if there is an incoming config
-        } // added by roger *******
+            incomingConfig = toLowerKeys(incomingConfig);
 
-        // // If there is no config object for current target make one
-        // *** Joe - moved above
-        // if (typeof config0[configtarget] !== 'object') {
-        //     config0[configtarget] = {};   
-        // }   
+            if (typeof config0[configtarget] !== 'object') {
+                config0[configtarget] = {};   
+            }
 
-        // no idea what this was for - Joe
-        // incomingConfig[target];  // load override 
-
-        //combine parameters from incoming parameters & inconfig and savedconfig
-        // *** section below unnessesary, maybe keep: delete params[configtarget];
-        // *** Joe - commented out the following
-        // var paramsobject={};
-        // paramsobject = incomingConfig['params'];  // get extra parameters from incoming params config
-        // params = jsonConcat(params,paramsobject); // join them with existing parameters
-        // paramsobject = config0[configtarget]['params']; // get extra parameters from config
-        // params = jsonConcat(params,paramsobject); // join them with existing parameters
+            config0[configtarget] = incomingConfig;   // incomingConfig[target];  // load override 
+            paramsobject = incomingConfig['params'];  // get extra parameters from incoming params config
+            params = jsonConcat(params,paramsobject); // join them with existing parameters
+            paramsobject = config0[configtarget]['params']; // get extra parameters from config
+            params = jsonConcat(params,paramsobject); // join them with existing parameters
                         // delete from parameters configtarget
-
-        //} **** taken out by roger
-
-        
+        }
 
         if (config0[configtarget] !== undefined) {
-            //delete params[configtarget];  *** moved by Roger
-            // pre, mid, post configs are going to have multiple params so we need to iterate
+            delete params[configtarget];
+            // pre, mid, post configs are going to have multiple params
             for (var i = 0; i < config0[configtarget].length; i++) {
-                //try a concat
-                if((params !== undefined) && (config0[configtarget][i].params !== undefined)) {
-                    config0[configtarget][i].params = jsonConcat(params, config0[configtarget][i].params); // concatenate with other pararms
-                } 
-                 //config0[configtarget][i].params= params; ** took out and put above, we should not change 'params'
+                config0[configtarget][i].params = params;
             }
              // save distiled parameters back to list
              // in example deletes midexecute : <something>
         }
+
 
         proxyprinttodiv("CreateDoList - config0 ", config0, 11);
 
@@ -262,69 +237,30 @@
                     return 0;
             });
         }
-
-        // *** commented out by joe
-        // replaced with code below
-        // if ((list === undefined) || (list === "")) { // would be always true --> || (list != "")) { // if list empty then make up a default record
-        //     // if ((configtarget=="preexecute") || (configtarget=="midexecute") || (configtarget=="postexecute")) {
-        //     //     configtarget="executeFn"; // default if howtodo config missing
-        //     //     }
-        //     // *** commneted by Rogr
-        //     list = [];   // if no list so far then make a list so there is something to execute
-        //     list[0] = {};
-        //     list[0].executeorder = 0;
-        //     list[0].tryorder = 0;
-        //     list[0].params = params;
-        //     list[0].dothis = configtarget;
-        //     list[0].dofn = configfn;
-        //     }
-
-        // The folowing code attempts to fix the list if it is missing a property
-        // I only build a single list entry object on postion [0] of the array
-        if((list === undefined) || (list === "")) {
-            list = [];
-        }
-        if(list[0] === undefined) {
+        if ((list === undefined) || (list === "")) { // would be always true --> || (list != "")) { // if list empty then make up a default record
+            if ((configtarget=="preexecute") || (configtarget=="midexecute") || (configtarget=="postexecute")) {
+                configtarget="executeFn"; // default if howtodo config missing
+                }
+            list = [];   // if no list so far then make a list so there is something to execute
             list[0] = {};
-        }
-        if(list[0].executeorder === undefined) {
             list[0].executeorder = 0;
-        }
-        if(list[0].tryorder === undefined) {
             list[0].tryorder = 0;
-        }
-        if(list[0].params === undefined) {
             list[0].params = params;
-        }
-        if(list[0].dothis === undefined) {
             list[0].dothis = configtarget;
-        }
-        // *** Joe I do a function look up here as theres a good chance of configfn being set to undefined or "" do to a remap
-        // ie.. configtarget is redir_b but by looking up a config it remaped dothis = func_b so we need to set configtarget to dothis
-        // this works but the problem is we are stuck on [0] for arrays so I think only one will remap and find the local function to stick in dofn
-        // notes: typically the configfn comes in from doThis which is fine on non remaps.. 
-        // on remaps the true function name to lookup is found while in createdolist
-        // which is why i'm doing this here, let me know what you think roger
-        if(list[0].dofn === undefined) {
             list[0].dofn = configfn;
-            if((list[0].dofn === "") && (window[list[0].dothis])) {
-                list[0].dofn = window[list[0].dothis];
+            }
+        // On a remap we may not have loaded a doFn try it now
+        if((configtarget !== "preexecute") && (configtarget !=="midexecute") && (configtarget !=="postexecute")) {
+            if(list[0].dofn === undefined) {
+                configtarget = list[0].dothis;
+                configfn = window[configtarget];
+                list[0].dofn = configfn;
+                // load the params in 
+                if((params !== undefined) && (list[0].params !== undefined)) {
+                    list[0].params = params;
+                }
             }
         }
-
-        // *** took out, made getexcuteobject smarter
-        // // On a remap we may not have loaded a doFn try it now
-        // if((configtarget !== "preexecute") && (configtarget !=="midexecute") && (configtarget !=="postexecute")) {
-        //     if(list[0].dofn === undefined) {
-        //         configtarget = list[0].dothis;
-        //         configfn = window[configtarget];
-        //         list[0].dofn = configfn;
-        //         // load the params in 
-        //         if((params !== undefined) && (list[0].params !== undefined)) {
-        //             list[0].params = params;
-        //         }
-        //     }
-        // }
 
         proxyprinttodiv("CreateDoList - list ", list, 11);
         return list;
@@ -338,12 +274,11 @@
         whatToDo,
         whatToDoFn,
         howToDo,
+        params,
         executeobject,
         targetfn,
         foundfn,
-        synchflag,
-        howToDoParams,
-        whatToDoParams; 
+        synchflag; 
 
         // iterate over our how to do list
         proxyprinttodiv("executelist - howToDoList ",howToDoList,11);
@@ -352,26 +287,24 @@
         for (h in howToDoList) { // go through each item in how list
             proxyprinttodiv("dothis - h ",h,11);
             howToDo = howToDoList[h]['dothis']; // get specific howToDo from list
-            howToDoParams = howToDoList[h]['params']; // get params that were stored
-            if ((howToDoParams === undefined) || (howToDoParams==="")) {howToDoParams={}};
-            proxyprinttodiv("executelist Hparams ",howToDoParams,11);
+            params = howToDoList[h]['params']; // get params that were stored
+            proxyprinttodiv("executelist params ",params,11);
             proxyprinttodiv("executelist howToDo ",howToDo,11);
 
             for (w in whatToDoList) { // step through whatlist
                 whatToDo = whatToDoList[w]['dothis']; // get specific whattodo
+
                 whatToDoFn = whatToDoList[w]['dofn'];
-                whatToDoParams = whatToDoList[w]['params'];
-                if ((whatToDoParams === undefined) || (whatToDoParams==="")) {whatToDoParams={}};
-                // if((params !== undefined) && (whatToDoList !== undefined)) {
-                //     params = jsonConcat(params, whatToDoList[w]['params']); // concatenate with other pararms
-                // } 
-                // else if(whatToDoList[w]['params'] !== undefined) { // if we cannot concat the params see if there are some params in the what to do list to load
-                //     params = whatToDoList[w]['params'];
-                // } 
-                proxyprinttodiv("executelist Wparams ",whatToDoParams,11);
+                if((params !== undefined) && (whatToDoList !== undefined)) {
+                    params = jsonConcat(params, whatToDoList[w]['params']); // concatenate with other pararms
+                } 
+                else if(whatToDoList[w]['params'] !== undefined) { // if we cannot concat the params see if there are some params in the what to do list to load
+                    params = whatToDoList[w]['params'];
+                } 
+                proxyprinttodiv("executelist params ",params,11);
                 proxyprinttodiv("executelist whatToDo ",whatToDoFn,11);
                 proxyprinttodiv("executelist whatToDoFn ",whatToDoFn,11);
-                executeobject = getexecuteobject(jsonConcat(howToDoParams, whatToDoParams), howToDo, whatToDo, whatToDoFn); // get status of that fn
+                executeobject = getexecuteobject(params, howToDo, whatToDo, whatToDoFn); // get status of that fn
                 proxyprinttodiv("executelist executeobject ",executeobject,11);
                 if (executeobject) {break}; // if fnparams sent back (fn found) then end
                 } // for w
@@ -402,7 +335,6 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
         var targetfn=undefined;
         var tempobject;
         var synchflag;
-        var fncheck=false;
 
         proxyprinttodiv("getexecuteobject",whatToDo,11);
         if ((howToDo) && (whatToDo)) {
@@ -412,11 +344,11 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                 case "executeFn":
                     targetfn = whatToDoFn;
 
-                    if((targetfn === undefined)  || (targetfn === "")){
-                        // we want to return undefined here so we try the next case
-                        targetfn = undefined;
+                    if (targetfn === undefined) {
                         break;
-                    };
+                    }; 
+
+                    synchflag = (targetfn.length == 1);
                     break;
 
                 case "executeParam" :
@@ -434,43 +366,24 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                         targetfn = window[targetfn];
                     }
 
+                    synchflag = (targetfn.length == 1);
                     break;
                     
                 case "executegetwid":
                     tempobject = executethis({'wid':whatToDo}, getwid);
-                    if ((tempobject === undefined) && (!tempobject['js'])) {targetfn = executeerror} 
-                        else {targetfn = tempobject['js']};
+                    targetfn=tempobject['js'];
+                    if (!targetfn instanceof Function){
+                        targetfn = window[targetfn];
+                    }
+
+                    synchflag = (targetfn.length == 1);
                     break;
 
                 case "server":
                     targetfn=window["server"];
                     params['executethis']=whatToDo;
-                    fncheck=true;
+                    synchflag=false;
                     break;    
-
-                case "executeerror":
-                    targetfn=window["executeerror"];
-                    break;  
-            }
-
-            if(targetfn !== undefined) {
-                synchflag = (targetfn.length == 1);
-            }
-
-
-            if (fncheck) {
-                // check to see if it is a string fucntion
-                // check to see if it is a 
-                if (!targetfn instanceof Function) {
-                    if (targetfn.indexOf('function')!=-1) {
-                        if (window[targetfn]) {
-                            targetfn = window[targetfn]
-                        } 
-                        else {
-                            targetfn = executeerror;
-                        }
-                    }
-                }
             }
             if (targetfn) {
                 proxyprinttodiv("executelist targetfunction ",String(targetfn),11);
@@ -480,20 +393,16 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     params: params,
                     synchflag: synchflag
                     }
-            }
+                }
             else{
-               return undefined
-               }
-        }
+                return undefined
+                }
+            }
         else { // if no exeucte this
             return undefined
-        }
-    }// fn
-
-
-    exports.executeerror = window.executeerror = executeerror = function executeerror(params, callback) {
-        callback({"etstatus":"executeerror"});
-    }
+            }
+    }; // fn
+        
 
     function nonCircularStringify(obj) {
         var cache = [];

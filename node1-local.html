@@ -86,8 +86,8 @@ function test4(params) {
 			<input id='function_to_run' size='20' value=''>
 			<input id='execute_function' class='btn btn-success' type='button' value='Run Function'/>
 			<label>Debug on ? </label><input type='checkbox' id='debugon'>
+			<label>Server call ? </label><input type='checkbox' id='server_caller'>
 			<label id='test_result_message' style='padding-left: 6em;'></label>
-			<img id='working_gif' src='./waiting.gif' style='display:none'>
 	 		<!-- <input id='mybutton' class='btn btn-warning' type='button' value='Show/Hide Local Storage'/>  -->
 		</div> <!-- end of col-md-12> -->
 	</div> <!-- end of row -->
@@ -218,9 +218,24 @@ $('#execute_function').click(function() {
 	$('#resultDiv').text("");
 	$('#test_result_message').text("");
 	$('#divprint').text("");
-
 	var function_to_execute = $('#function_to_run').val();
-	var result = executethis({"executethis":function_to_execute});
+
+	var my_execute_object = {"executethis":function_to_execute};
+
+	if ($('#server_caller').prop('checked')) {		
+		my_execute_object['configuration'] = {
+	        "midexecute": [
+	            {
+	                "dothis": "server",
+	                "tryorder": 0,
+	                "executeorder": 0,
+	                "params": {}
+	            }
+	        ]
+	    };
+	}
+
+	var result = executethis(my_execute_object);
 	var result_count = Object.keys(result).length;
 
 	// var y = verifysummary("test_results");
@@ -509,7 +524,9 @@ function displaylocalStore () {
 
 // Outputs data to screen and console
 exports.printToDiv = printToDiv = function(text, obj, debugone){
-	if (debuglevel === undefined) var debuglevel = 20;
+	if (debuglevel === undefined) {
+		debuglevel = 20;
+	}
 	if (!debugone) {debugone=-1};
 	if ((Debug == 'true') || (debuglevel==debugone) || (debugone==99)) {
 

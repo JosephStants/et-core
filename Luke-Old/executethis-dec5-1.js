@@ -195,7 +195,7 @@
 // fish out incoming configuraton
         if ((params['configuration'] !== undefined) && (params['configuration'][configtarget] !== undefined)){
             var incomingConfig = [];
-            var object = params['configuration'][configtarget][0]; // needs [0]
+            var object = params['configuration'][configtarget][0];
             object = toLowerKeys(object);
             incomingConfig.push(object); // get send in config
             // delete parms config
@@ -244,6 +244,7 @@
              // save distiled parameters back to list
              // in example deletes midexecute : <something>
         }
+
 
         proxyprinttodiv("CreateDoList - config0 ", config0, 11);
 
@@ -410,30 +411,12 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
             switch (howToDo) {
 
                 case "executeFn":
-                    targetfn = whatToDoFn;
-
-                    if((targetfn === undefined)  || (targetfn === "")){
-                        // we want to return undefined here so we try the next case
-                        targetfn = undefined;
-                        break;
-                    };
+                    if (whatToDoFn){targetfn = whatToDoFn} else {targetfn=executeerror};
                     break;
 
                 case "executeParam" :
-                    if (params === undefined) {
-                        targetfn = undefined;
-                        break;
-                    }
-
-                    targetfn = params[whatToDo];
-                    
-                    if (!targetfn instanceof Function) {
-                        targetfn = window[targetfn];
-                        }
-                    else if(typeof targetfn === 'string') {
-                        targetfn = window[targetfn];
-                    }
-
+                    if ((params === undefined) && (!params[whatToDo])) {targetfn = executeerror} 
+                        else {targetfn = params[whatToDo]};
                     break;
                     
                 case "executegetwid":
@@ -453,11 +436,7 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     break;  
             }
 
-            if(targetfn !== undefined) {
-                synchflag = (targetfn.length == 1);
-            }
-
-
+            synchflag = (targetfn.length == 1);   
             if (fncheck) {
                 // check to see if it is a string fucntion
                 // check to see if it is a 
@@ -472,7 +451,7 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     }
                 }
             }
-            if (targetfn) {
+            //if (targetfn) {
                 proxyprinttodiv("executelist targetfunction ",String(targetfn),11);
                 return {
                     targetfn: targetfn ,
@@ -480,10 +459,10 @@ function getexecuteobject(params, howToDo, whatToDo, whatToDoFn) {
                     params: params,
                     synchflag: synchflag
                     }
-            }
-            else{
-               return undefined
-               }
+            //    }
+            //else{
+            //    return undefined
+            //    }
         }
         else { // if no exeucte this
             return undefined
