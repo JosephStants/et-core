@@ -123,9 +123,9 @@ exports.ctt = ctt = function ctt (params, callback) {
 
 // These are the add/get tests to stress out the dto/dot notation system
 exports.agtt = agtt =function agtt (params, callback) {
-	ast1();
-	ast2();
-	ast3();
+	agt1();
+	agt2();
+	agt3();
 
 	var x = test_results;
     if (callback instanceof Function) { 
@@ -1144,6 +1144,9 @@ exports.ag3 = ag3 = function ag3 (params, callback) {
 }
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 exports.ag4_setup = ag4_setup = function ag4_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"measuredto","metadata.method":"measuredto","duration":"string"}, "", "");
+    executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"sounddto", "secondarywid":"measuredto", "relationshiptype":"attributes"}, "", "");
+
     executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
     executetest("addwidmaster",{"wid":"songdto", "metadata.method":"songdto", "title":"string", "sounddto":"onetomany"}, "", "");
     executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"songdto", "secondarywid":"sounddto", "relationshiptype":"attributes"}, "", "");
@@ -1152,6 +1155,7 @@ exports.ag4_setup = ag4_setup = function ag4_setup (params, callback) {
     							"metadata.method" : "songdto", 
     							"title" : "Highway to Hell",  
     							"sounddto.0.note"	: "A flat",
+    							"sounddto.0.note.measuredto.0.duration" : "quarter",
     							"sounddto.1.note"	: "B sharp",
     							"sounddto.2.note"	: "C flat",
     							}, "", "");

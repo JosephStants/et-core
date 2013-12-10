@@ -27,8 +27,6 @@
 	<script src="et-unit_tests.js" type="text/javascript"></script>
 	<script src="cody.js" type="text/javascript"></script>
 -->
-	
-
 <style  type="text/css">
         body {
         padding-top: 15px;
@@ -449,7 +447,9 @@ function displaylocalStore () {
 
 // Outputs data to screen and console
 exports.printToDiv = printToDiv = function(text, obj, debugone){
-	if (debuglevel === undefined) var debuglevel = 20;
+	if (debuglevel === undefined) {
+		debuglevel = 20;
+	}
 	if (!debugone) {debugone=-1};
 	if ((Debug == 'true') || (debuglevel==debugone) || (debugone==99)) {
 
