@@ -7,7 +7,7 @@ exports.at = at = function at(params, callback) {
 	result = jsonConcat(result, tt());
 	result = jsonConcat(result, astt());
 	result = jsonConcat(result, ctt());
-	result = jsonConcat(result, alphatt());
+	result = jsonConcat(result, agtt());
 	
     if (callback instanceof Function) { 
     	callback(result); 
@@ -120,6 +120,23 @@ exports.ctt = ctt = function ctt (params, callback) {
     	return x; 
     }
 }
+
+// These are the add/get tests to stress out the dto/dot notation system
+exports.agtt = agtt =function agtt (params, callback) {
+	agt1();
+	agt2();
+	agt3();
+
+	var x = test_results;
+    if (callback instanceof Function) { 
+    	callback(x); 
+    } else { 
+    	return x; 
+    }
+}
+
+
+
 // Testb is a simple test: create a soundDTO and then get it.
 // This is to test the dto portion of add/get. Teste is a 
 // continuation of testb, in that a colorDTO is created, and 2 colorwids
@@ -1044,6 +1061,127 @@ exports.async_func_h = async_func_h = function async_func_h (parameters, callbac
 // 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 // 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 // 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+exports.ag1_setup = ag1_setup = function ag1_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
+    executetest("getwidmaster", {"wid":"sounddto"}, "get_sounddto_result", "");
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+
+// This will test the ability to write a dto to the db and retrieve it
+exports.ag1 = ag1 = function ag1 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag1_setup();
+	params = logverify("alphagetwidmaster_unit_tests","ag1_result","get_sounddto_result","","", {"note":"string","wid":"sounddto","metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+	// return verifysummary("test_results");
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exports.ag2_setup = ag2_setup = function ag2_setup (params, callback) {
+		executetest("addwidmaster",{"wid":"colordto","metadata.method":"colordto","hue":"string"}, "", "");
+		executetest("addwidmaster",{"wid":"color1","hue":"red"}, "", "");
+		executetest("addwidmaster",{"wid":"color2","hue":"blue"}, "", "");
+	    executetest("getwidmaster", {"wid":"color1"}, "get_color1_result", "");	
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+
+// This will test the ability to write a dto to the db, use that dto to write
+// a wid with that dto, and get the results of getting that wid.
+exports.ag2 = ag2 = function ag2 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag2_setup();
+	params = logverify("alpha_unit_tests","ag2_result","get_color1_result","","", {"hue":"red","wid":"color1","metadata.method":"defaultdto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exports.ag3_setup = ag3_setup = function ag3_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
+    executetest("addwidmaster",{"wid":"songdto", "metadata.method":"songdto", "title":"string", "sounddto":"onetomany"}, "", "");
+    executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"songdto", "secondarywid":"sounddto", "relationshiptype":"attributes"}, "", "");
+
+    executetest("addwidmaster",{"wid":"song1",
+    							"metadata.method" : "songdto", 
+    							"title" : "Highway to Hell",  
+    							"sounddto.0.note"	: "A flat",
+    							"sounddto.1.note"	: "B sharp",
+    							"sounddto.2.note"	: "C flat",
+    							}, "", "");
+    executetest("getwidmaster", {"wid":"song1"}, "get_song1_result", "");
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// This is a 2 level test of the dtos...instantiate song1 with a songdto, and some sounddto values
+exports.ag3 = ag3 = function ag3 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag3_setup();
+	params = logverify("alpha_unit_tests","ag3_result","get_song1_result","","", {"title":"Highway to Hell","wid":"song1","metadata.method":"songdto","sounddto.0.note":"A flat","sounddto.0.wid":"1","sounddto.0.metadata.method":"sounddto","sounddto.1.note":"B sharp","sounddto.1.wid":"3","sounddto.1.metadata.method":"sounddto","sounddto.2.note":"C flat","sounddto.2.wid":"5","sounddto.2.metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exports.ag4_setup = ag4_setup = function ag4_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"measuredto","metadata.method":"measuredto","duration":"string"}, "", "");
+    executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"sounddto", "secondarywid":"measuredto", "relationshiptype":"attributes"}, "", "");
+
+    executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
+    executetest("addwidmaster",{"wid":"songdto", "metadata.method":"songdto", "title":"string", "sounddto":"onetomany"}, "", "");
+    executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"songdto", "secondarywid":"sounddto", "relationshiptype":"attributes"}, "", "");
+
+    executetest("addwidmaster",{"wid":"song1",
+    							"metadata.method" : "songdto", 
+    							"title" : "Highway to Hell",  
+    							"sounddto.0.note"	: "A flat",
+    							"sounddto.0.note.measuredto.0.duration" : "quarter",
+    							"sounddto.1.note"	: "B sharp",
+    							"sounddto.2.note"	: "C flat",
+    							}, "", "");
+    executetest("getwidmaster", {"wid":"song1"}, "get_song1_result", "");
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// This is a 3 level test where song1 will have data from a songdto, that uses a sounddto, and the sounddto will use a measuredto 
+exports.ag4 = ag4 = function ag4 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag4_setup();
+	params = logverify("alpha_unit_tests","ag4_result","get_song1_result","","", {"title":"Highway to Hell","wid":"song1","metadata.method":"songdto","sounddto.0.note":"A flat","sounddto.0.wid":"1","sounddto.0.metadata.method":"sounddto","sounddto.1.note":"B sharp","sounddto.1.wid":"3","sounddto.1.metadata.method":"sounddto","sounddto.2.note":"C flat","sounddto.2.wid":"5","sounddto.2.metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
 exports.getwidtest = getwidtest = function getwidtest(params, callback) {
     executetest('getwid', {wid:'test1'});
     if (callback instanceof Function) { 
@@ -1202,7 +1340,6 @@ exports.testc = testc = function testc (params, callback) {
     } else { 
     	return params; 
     }
-	// return verifysummary("test_results");
 }
 // This will test the ability to write a dto to the db, use that dto to write
 // a wid with that dto, and get the results of getting that wid.
@@ -1216,7 +1353,6 @@ exports.teste = teste = function teste (params, callback) {
     } else { 
     	return params; 
     }
-	// return verifysummary("test_results");
 }
 
 exports.testf = testf = function testf (params, callback) {

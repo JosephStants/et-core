@@ -1,7 +1,17 @@
     exports.ca1 = ca1 = function ca1(params, callback) {
-        testclearstorage();
+        testclearallstorage();
+        //testclearstorage();
 
         /* Setting up the structure for a user account & surveys */
+
+        // Create the user dto	
+        executetest("addwidmaster", { "wid": "userdto", "metadata.method": "userdto", "first": "string", "last": "string", "surveydto": "onetomany", "securitydto":"onetoone" }, "", "");
+
+        //Create the security dto
+        executetest("addwidmaster", { "wid": "securitydto", "metadata.method": "securitydto", "accesstoken": "string", "securitylevel": "string", "userid":"string" }, "", "");
+
+        // Create the survey dto
+        executetest("addwidmaster", { "wid": "surveydto", "metadata.method": "surveydto", "title": "string", "description": "string", "questiondto": "onetomany" }, "", "");
 
         // Create the answer dto
         executetest("addwidmaster", { "wid": "answerdto", "metadata.method": "answerdto", "answer": "string" }, "", "");
@@ -12,58 +22,83 @@
         // Create the question dto
         executetest("addwidmaster", { "wid": "questiondto", "metadata.method": "questiondto", "question": "string", "answerdto": "onetomany", "responsedto": "onetomany" }, "", "");
 
-        // Create the survey dto
-        executetest("addwidmaster", { "wid": "surveydto", "metadata.method": "surveydto", "title": "string", "description": "string", "questiondto": "onetomany" }, "", "");
+        // create relationships
+        executetest("addwidmaster", { "wid": "relationshipdto1", "metadata.method": "relationshipdto", "primarywid": "questiondto", "secondarywid": "answerdto" }, "", "");
+        executetest("addwidmaster", { "wid": "relationshipdto2", "metadata.method": "relationshipdto", "primarywid": "questiondto", "secondarywid": "responsedto" }, "", "");
+        executetest("addwidmaster", { "wid": "relationshipdto3", "metadata.method": "relationshipdto", "primarywid": "surveydto", "secondarywid": "questiondto" }, "", "");
+        executetest("addwidmaster", { "wid": "relationshipdto4", "metadata.method": "relationshipdto", "primarywid": "userdto", "secondarywid": "surveydto" }, "", "");
+        executetest("addwidmaster", { "wid": "relationshipdto5", "metadata.method": "relationshipdto", "primarywid": "userdto", "secondarywid": "securitydto" }, "", "");
 
-        // Relate the question dto to the answer dto (questions can have multiple answers) and the response dto (questions can have multiple responses)
-        executetest("addwidmaster", { "wid": "relationshipdto1", "metadata.method": "relationshipdto1", "primarywid": "questiondto", "secondarywid": "answerdto" }, "", "");
-        executetest("addwidmaster", { "wid": "relationshipdto2", "metadata.method": "relationshipdto2", "primarywid": "questiondto", "secondarywid": "responsedto" }, "", "");
 
-        // Relate the survey dto to the question dto (surveys can have multiple questions)
-        executetest("addwidmaster", { "wid": "relationshipdto3", "metadata.method": "relationshipdto3", "primarywid": "surveydto", "secondarywid": "questiondto" }, "", "");
+        // Create user account
+        executetest("addwidmaster", { "wid": "roger", "metadata.method": "userdto", "first": "roger", "last": "Lee" }, "", "");
 
-        // Create the user dto  
-        executetest("addwidmaster", { "wid": "userdto", "metadata.method": "userdto", "first": "string", "last": "string", "surveydto": "onetomany" }, "", "");
+        //Create user security level
+        executetest("addwidmaster", { "wid": "roger", "metadata.method": "userdto", "securitylevel": "777" }, "", "");
 
-        // Relate the survey dto to the question dto (surveys can have multiple questions)
-        executetest("addwidmaster", { "wid": "relationshipdto4", "metadata.method": "relationshipdto4", "primarywid": "userdto", "secondarywid": "surveydto" }, "", "");
+        // roger creates a survey and adds a question (method #1 - the one liner)
+        executetest("addwidmaster",
+            {
+                "wid": "roger",
+                "metadata.method": "userdto",
+                "surveydto.0.title": "All About Restaurants",
+                "surveydto.0.description": "Questions about popular restaurants",
+                "surveydto.0.questiondto.0.question": "Favorite Restaurant?",
+                "surveydto.0.questiondto.0.answerdto.0.answer": "Ponderosa",
+                "surveydto.0.questiondto.0.answerdto.1.answer": "Outback",
+                "surveydto.0.questiondto.0.answerdto.2.answer": "Applebees",
+                "surveydto.0.questiondto.0.answerdto.3.answer": "Hard Rock Cafe",
+                "surveydto.0.questiondto.0.answerdto.4.answer": "Red Lobster",
 
-        // Create three user accounts
-        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "first": "Tim", "last": "Lee" }, "", "");
-        executetest("addwidmaster", { "wid": "tom", "metadata.method": "userdto", "first": "Tom", "last": "Jones" }, "", "");
-        executetest("addwidmaster", { "wid": "tony", "metadata.method": "userdto", "first": "Tony", "last": "Gates" }, "", "");
+                "surveydto.0.questiondto.1.question": "Which of these toppings do you prefer on your pizza?",
+                "surveydto.0.questiondto.1.answerdto.0.answer": "sausage",
+                "surveydto.0.questiondto.1.answerdto.1.answer": "cheese",
+                "surveydto.0.questiondto.1.answerdto.2.answer": "mushrooms",
+                "surveydto.0.questiondto.1.answerdto.3.answer": "pineapple",
+                "surveydto.0.questiondto.1.answerdto.4.answer": "Onions",
+                "surveydto.1.title": "All About Yap",
+                "surveydto.1.description": "Questions about Yap History",
+                    }, "", "");
 
-        /*
-        // Tim creates a survey and adds a question (method #1 - the one liner)
-        executetest("addwidmaster",{"wid":"tim","metadata.method":"userdto","surveydto.0.title":"All About Restaurants","surveydto.0.description":"Questions about popular restaurants","surveydto.0.questiondto.0.question":"Favorite Restaurant?","surveydto.0.questiondto.0.answerdto.0.answer":"Ponderosa","surveydto.0.questiondto.0.answerdto.1.answer":"Outback","surveydto.0.questiondto.0.answerdto.2.answer":"Applebees","surveydto.0.questiondto.0.answerdto.3.answer":"Hard Rock Cafe"}, "", "");
-        */
+//        executetest("addwidmaster",
+//            {
+//                "wid": "roger",
+//                "metadata.method": "userdto",
+//                "command.dtotype": "questiondto",
+//                "question": "Favorite Restaurant?"
+//            }, "", "");
 
-        // Tim creates a second survey and adds a question (method #2 - the multi liner)
-        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.title": "All About Fast Food Restaurants", "surveydto.description": "Questions about popular fast food restaurants" }, "", "");
-//        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.0.questiondto.0.question": "Which of these fast food restaurants do you like the most?" }, "", "");
-//        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.0.questiondto.0.answerdto.0.answer": "McDonald's" }, "", "");
-//        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.0.questiondto.0.answerdto.1.answer": "Burger King" }, "", "");
-//        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.0.questiondto.0.answerdto.2.answer": "Arby's" }, "", "");
-//        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.0.questiondto.0.answerdto.3.answer": "Wendy's" }, "", "");
+//        executetest("addwidmaster",
+//            {
+//                "wid": "roger",
+//                "metadata.method": "userdto",
+//                "command.dtotype": "answerdto",
+//                "0.answer": "Ponderosa",
+//                "1.answer": "Outback",
+//                "2.answer": "Applebees",
+//                "3.answer": "Hard Rock Cafe",
+//                "4.answer": "Red Lobster"
+//            }, "", "");
 
-        /*
-        // Tim creates a final survey and adds a question (method #3 - inherit)
-        executetest("addwidmaster",{"wid":"fastfoodfrequency","metadata.method":"questiondto","question":"How often do you eat at fast food restaurants?"}, "", "");
-        executetest("addwidmaster",{"wid":"fastfoodfrequency","metadata.method":"questiondto","answerdto.0.answer":"Very Often"}, "", "");
-        executetest("addwidmaster",{"wid":"fastfoodfrequency","metadata.method":"questiondto","answerdto.1.answer":"Often"}, "", "");
-        executetest("addwidmaster",{"wid":"fastfoodfrequency","metadata.method":"questiondto","answerdto.2.answer":"Sometimes"}, "", "");
-        executetest("addwidmaster",{"wid":"fastfoodfrequency","metadata.method":"questiondto","answerdto.3.answer":"Not Very Often"}, "", "");
-        executetest("addwidmaster",{"wid":"fastfoodfrequency","metadata.method":"questiondto","answerdto.4.answer":"Never"}, "", "");
-    
-        executetest("addwidmaster",{"wid":"tim","metadata.method":"userdto","surveydto.2.title":"More About Fast Food Restaurants","surveydto.2.description":"Questions about popular fast food restaurants"}, "", "");
-        executetest("addwidmaster",{"wid":"tim","metadata.method":"userdto","surveydto.2.questiondto.0.inherit":"fastfoodfrequency"}, "", "");
-        */
+//        executetest("addwidmaster",
+//            {
+//                "wid": "roger",
+//                "metadata.method": "userdto",
+//                "command.dtotype": "questiondto",
+//                "question": "Which of these toppings do you prefer on your pizza?"
+//            }, "", "");
 
-        //executetest("getwidmaster", {"wid":"tim"}, "tim_get", "");
-
-        // Tom answer's Tim's Survey
-        executetest("addwidmaster", { "wid": "tim", "metadata.method": "userdto", "surveydto.0.questiondto.0.responsedto.0.response": "Burger King111", "surveydto.0.questiondto.0.responsedto.0.user": "tom" }, "", "");
-        //executetest("addwidmaster",{"wid":"tim","metadata.method":"responsedto","response":"Burger King","user":"tom"}, "", "");
+//        executetest("addwidmaster",
+//            {
+//                "wid": "roger",
+//                "metadata.method": "userdto",
+//                "command.dtotype": "answerdto",
+//                "0.answer": "sausage",
+//                "1.answer": "cheese",
+//                "2.answer": "mushrooms",
+//                "3.answer": "pineapple",
+//                "4.answer": "Onions"
+//            }, "", "");
 
         executeobject = {};
         executeobject["wid"] = "tim";
@@ -77,90 +112,6 @@
         }
     };
 
-// exports.ca1 = ca1 = function ca1(params, callback) {
-//     //testclearallstorage();
-//     testclearstorage();
-
-//     /* Setting up the structure for a user account & surveys */
-
-//     // Create the answer dto
-//     executetest("addwidmaster", { "wid": "answerdto", "metadata.method": "answerdto", "answer": "string" }, "", "");
-
-//     // Create the responses dto
-//     executetest("addwidmaster", { "wid": "responsedto", "metadata.method": "responsedto", "response": "string", "user": "string" }, "", "");
-
-//     // Create the question dto
-//     executetest("addwidmaster", { "wid": "questiondto", "metadata.method": "questiondto", "question": "string", "answerdto": "onetomany", "responsedto": "onetomany" }, "", "");
-
-//     // Create the survey dto
-//     executetest("addwidmaster", { "wid": "surveydto", "metadata.method": "surveydto", "title": "string", "description": "string", "questiondto": "onetomany" }, "", "");
-
-//     // Relate the question dto to the answer dto (questions can have multiple answers) and the response dto (questions can have multiple responses)
-//     executetest("addwidmaster", { "wid": "relationshipdto1", "metadata.method": "relationshipdto", "primarywid": "questiondto", "secondarywid": "answerdto" }, "", "");
-//     executetest("addwidmaster", { "wid": "relationshipdto2", "metadata.method": "relationshipdto", "primarywid": "questiondto", "secondarywid": "responsedto" }, "", "");
-
-//     // Relate the survey dto to the question dto (surveys can have multiple questions)
-//     executetest("addwidmaster", { "wid": "relationshipdto3", "metadata.method": "relationshipdto", "primarywid": "surveydto", "secondarywid": "questiondto" }, "", "");
-
-//     // Create the user dto  
-//     executetest("addwidmaster", { "wid": "userdto", "metadata.method": "userdto", "first": "string", "last": "string", "surveydto": "onetomany" }, "", "");
-
-//     // Relate the survey dto to the question dto (surveys can have multiple questions)
-//     executetest("addwidmaster", { "wid": "relationshipdto4", "metadata.method": "relationshipdto", "primarywid": "userdto", "secondarywid": "surveydto" }, "", "");
-
-//     // Create three user accounts
-//     executetest("addwidmaster", { "wid": "roger", "metadata.method": "userdto", "first": "roger", "last": "Lee" }, "", "");
-
-//     // roger creates a survey and adds a question (method #1 - the one liner)
-//     executetest("addwidmaster",
-//             {
-//                 "wid": "roger",
-//                 "metadata.method": "userdto",
-//                 "surveydto.0.title": "All About Restaurants",
-//                 "surveydto.0.description": "Questions about popular restaurants",
-//                 "surveydto.0.questiondto.0.question": "Favorite Restaurant?",
-//                 "surveydto.0.questiondto.0.answerdto.0.answer": "Ponderosa",
-//                 "surveydto.0.questiondto.0.answerdto.1.answer": "Outback",
-//                 "surveydto.0.questiondto.0.answerdto.2.answer": "Applebees",
-//                 "surveydto.0.questiondto.0.answerdto.3.answer": "Hard Rock Cafe",
-//                 "surveydto.0.questiondto.0.answerdto.4.answer": "Red Lobster",
-//                 "surveydto.0.questiondto.1.question": "Which of these toppings do you prefer on your pizza?",
-//                 "surveydto.0.questiondto.1.answerdto.0.answer": "sausage",
-//                 "surveydto.0.questiondto.1.answerdto.1.answer": "cheese",
-//                 "surveydto.0.questiondto.1.answerdto.2.answer": "mushrooms",
-//                 "surveydto.0.questiondto.1.answerdto.3.answer": "pineapple",
-//                 "surveydto.0.questiondto.1.answerdto.4.answer": "Onions"
-//             }, "", "");
-
-
-//     //        executetest("addwidmaster",
-//     //            {
-//     //                "wid": "roger",
-//     //                "metadata.method": "userdto",
-//     //                "command.dtotype": "questiondto",
-//     //                "question": "Which of these toppings do you prefer on your pizza?"
-//     //            }, "", "");
-
-//     //        executetest("addwidmaster",
-//     //            {
-//     //                "wid": "roger",
-//     //                "metadata.method": "userdto",
-//     //                "command.dtotype": "answerdto",
-//     //                "0.answer": "sausage",
-//     //                "1.answer": "cheese",
-//     //                "2.answer": "mushrooms",
-//     //                "3.answer": "pineapple",
-//     //                "4.answer": "Onions"
-//     //            }, "", "");
-
-//     executetest("getwidmaster", { "wid": "roger" }, "roger_get", "");
-
-//     executeobject = {};
-//     executeobject["wid"] = "roger";
-//     resultobject = executethis(executeobject, getwidmaster);
-//     proxyprinttodiv("end", resultobject, 99);
-//     callback(params);
-// }
 
 
 exports.mongotest1 = mongotest1 = function mongotest1(parms, callback) { 
