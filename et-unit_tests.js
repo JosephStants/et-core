@@ -7,7 +7,7 @@ exports.at = at = function at(params, callback) {
 	result = jsonConcat(result, tt());
 	result = jsonConcat(result, astt());
 	result = jsonConcat(result, ctt());
-	result = jsonConcat(result, alphatt());
+	result = jsonConcat(result, agtt());
 	
     if (callback instanceof Function) { 
     	callback(result); 
@@ -104,7 +104,15 @@ exports.ctt = ctt = function ctt (params, callback) {
 	ct9();
 	ct10();
 	ct11();
-	// ct14();
+	ct13();
+	ct14();
+	ct15();
+	ct16();
+	// ct17();
+	ct16();
+	ct18();
+	ct19();
+	ct20();
 	var x = test_results;
     if (callback instanceof Function) { 
     	callback(x); 
@@ -112,6 +120,23 @@ exports.ctt = ctt = function ctt (params, callback) {
     	return x; 
     }
 }
+
+// These are the add/get tests to stress out the dto/dot notation system
+exports.agtt = agtt =function agtt (params, callback) {
+	ast1();
+	ast2();
+	ast3();
+
+	var x = test_results;
+    if (callback instanceof Function) { 
+    	callback(x); 
+    } else { 
+    	return x; 
+    }
+}
+
+
+
 // Testb is a simple test: create a soundDTO and then get it.
 // This is to test the dto portion of add/get. Teste is a 
 // continuation of testb, in that a colorDTO is created, and 2 colorwids
@@ -512,8 +537,8 @@ exports.ct4a = ct4a = function ct4a (params, callback) {
 exports.ct5 = ct5 = function ct5 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
-	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_a","postexecute":"redir_a"}, "c_t5_output", "");
-	params = logverify("c_unit_tests","c_t5_result","c_t5_output","","",{"c":"0","f":"3","g":"4"});
+	executetest("executethis", {"executethis":"redir_b", "d":"1", "e":"2", "c":"3","preexecute":"redir_a","postexecute":"redir_c"}, "c_t5_output", "");
+	params = logverify("c_unit_tests","c_t5_result","c_t5_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -525,7 +550,7 @@ exports.ct6 = ct6 = function ct6 (params, callback) {
 	testclearstorage();
 	config = setconfig2();
 	executetest("executethis", {"executethis":"redir_b", "c":"0", "d":"1", "e":"2","preexecute":"redir_c","postexecute":"redir_c"}, "c_t6_output", "");
-	params = logverify("c_unit_tests","c_t6_result","c_t6_output","","",{"d":"1","h":"5","g":"4"});
+	params = logverify("c_unit_tests","c_t6_result","c_t6_output","","", {"midexecute":"redir_b","postexecute":"redir_c","e":"2","g":"4","d":"1","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -574,19 +599,21 @@ exports.ct7a = ct7a = function ct7a (params, callback) {
             {
                 "dothis": "executeFn",
                 "tryorder": "0",
-                "executeorder": "0"
+                "executeorder": "0",
+                "params": {}
             }
         ],
         "a": [
             {
                 "dothis": "alertFn1",
                 "tryorder": "0",
-                "executeorder": "0"
+                "executeorder": "0",
+                "params": {}
             }
         ]
     }}, "c_t7_output", "");
 	// params = logverify("c_unit_tests","c_t7_result","c_t7_output","","",{"c":"0","d":"1","executethis":"func_b","ct7a":"did some alerting","g":"4","howtodooverride":"you got your hottodooverwritten"});
-	params = logverify("c_unit_tests","ct7a_result","ct7a_output","","",{"c":"0","f":"3","ct7a":"did some alerting","g":"4"});
+	params = logverify("c_unit_tests","ct7a_result","ct7a_output","","",{"c":"0","d":"1","ct7a":"did some alerting","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -613,7 +640,8 @@ exports.ct9 = ct9 = function ct9 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"does_not_exist", "does_not_exist":"func_b", "c":"0", "d":"1", "e":"2"}, "ct9_output", "");
-	params = logverify("c_unit_tests","ct9_result","ct9_output","","",{"d":"1","c":"0","g":"4"});
+    // since we are overiding how functions are maped here, "does_not_exist_* are not deleted from the params
+	params = logverify("c_unit_tests","ct9_result","ct9_output","","",{"does_not_exist":"func_b","d":"1","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -639,7 +667,8 @@ exports.ct10 = ct10 = function ct10 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "preexecute":"does_not_exist","does_not_exist":"func_a", "c":"0", "d":"1", "e":"2"}, "ct10_output", "");
-	params = logverify("c_unit_tests","ct10_result","ct10_output","","",{"f":"3","c":"0","g":"4"});
+	// since we are overiding how functions are maped here, "does_not_exist_* are not deleted from the params
+    params = logverify("c_unit_tests","ct10_result","ct10_output","","",{"does_not_exist":"func_a","f":"3","c":"0","g":"4"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -653,7 +682,8 @@ exports.ct11 = ct11 = function ct11 (params, callback) {
 	testclearstorage();
 	config = setconfig1();
 	executetest("executethis", {"executethis":"func_b", "preexecute":"does_not_exist_1","does_not_exist_1":"func_a", "postexecute":"does_not_exist_2","does_not_exist_2":"func_c", "c":"0", "d":"1", "e":"2"}, "ct11_output", "");
-	params = logverify("c_unit_tests","ct11_result","ct11_output","","",{"f":"3","h":"5","g":"4"});
+	// since we are overiding how functions are maped here, "does_not_exist_* are not deleted from the params
+    params = logverify("c_unit_tests","ct11_result","ct11_output","","",{"does_not_exist_1":"func_a", "does_not_exist_2":"func_c", "f":"3","h":"5","g":"4"}); 
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -704,15 +734,15 @@ exports.ct12 = ct12 = function ct12 (params, callback) {
 
 // --------------not implemnted yet
 
-// This test is to test a config where a and b do not exist, but c does and c will execute. You
+// This test is to test a config where a and b do not exist, but func_c does and c will execute. You
 // should not see any data for ct13_output_a, or b.
 exports.ct13 = ct13 = function ct13 (params, callback) {
 	testclearstorage();
 	config = setconfig6();
 	executetest("executethis", {"executethis":"a"}, "ct13_output_a", "");
 	executetest("executethis", {"executethis":"b"}, "ct13_output_b", "");
-	executetest("executethis", {"executethis":"c"}, "ct13_output_c", "");
-	params = logverify("c_unit_tests","ct13_result","ct13_output_c","","",{"fire_c":"0"});
+	executetest("executethis", {"executethis":"fire_c"}, "ct13_output_c", "");
+	params = logverify("c_unit_tests","ct13_result","ct13_output_c","","",{"fire_c":"fire_c is now fired", "cer2":"booberry"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -735,12 +765,107 @@ exports.ct14 = ct14 = function ct14 (params, callback) {
 }
 
 // This will send the alphabits param in the preexecute config, but will overriding it in the args to
-// win out? It does not...the args are lost and the params from the config win out.
+// win out? It does...the config params are lost and the 'arg' params from the config win out.
 exports.ct15 = ct15 = function ct15 (params, callback) {
 	testclearstorage();
 	config = setconfig6();
 	executetest("executethis", {"executethis":"func_b","preexecute":"func_a", "cer1":"booberry","c":"0", "d":"1", "e":"2"}, "ct15_output", "");
-	params = logverify("c_unit_tests","ct15_result","ct15_output","","",{"g":"4","cer1":"alphabits","cer2":"booberry","f":"3","c":"0"});
+	params = logverify("c_unit_tests","ct15_result","ct15_output","","",{"g":"4","cer1":"booberry","f":"3","c":"0","cer2":"booberry"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// Here the object is to get a set of config params from the config itself by using setconfig2 and checking for the 
+// config params in the assertion wid.
+exports.ct16 = ct16 = function ct16 (params, callback) {
+	testclearstorage();
+	config = setconfig2();
+	executetest("executethis", {"executethis":"func_b", "preexecute":"mock_server", "c":"0", "d":"1", "e":"2"}, "ct16_output", "");
+	params = logverify("c_unit_tests","ct16_result","ct16_output","","", {"d":"1","c":"0","g":"4","configuration":{"login1":[{"executeorder":0,"tryorder":0,"dothis":"login","params":{}}]} });
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// To test if the executeDefault gets fired, ct17 calls a 'doesnotexist' function to look for. It will not find and function
+// or a parameter, so it should find executeDefault that has a param to be expected to be sent to func_b.
+exports.ct17 = ct17 = function ct17 (params, callback) {
+	testclearstorage();
+	config = setconfig7();
+	executetest("executethis", {"executethis":"doesnotexist", "c":"0", "d":"1", "e":"2"}, "ct17_output", "");
+	params = logverify("c_unit_tests","ct17_result","ct17_output","","", {"d":"1","c":"0","g":"4","exdef":"executeDefault was grabbed" });
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// This is to use the params in preexecute to ensure that the preexecute params are getting used by executeFn
+exports.ct18 = ct18 = function ct18 (params, callback) {
+	testclearstorage();
+	config = setconfig7();
+	executetest("executethis", {"executethis":"func_b", "preexecute":"func_a", "c":"0", "d":"1", "e":"2"}, "ct18_output", "");
+	params = logverify("c_unit_tests","ct18_result","ct18_output","","", {"exdef":"param after executefn and executeparam was grabbed","f":"3","c":"0","myexfnparam":"hereismyfnparam","g":"4"});
+	// params = logverify("c_unit_tests","ct18_result","ct18_output","","", {"f":"3","c":"0","g":"4","myexfnparam":"hereismyfnparam" });
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// This test is to send params to executethis. There will be params in the call to executethis, config file, and the config in the params
+// sent to executethis. There are params that will be used and changed throughout the call...they are alfa, bravo, and charlie. At this point, 
+// the args sent to executethis will always win...not any of the 3 places in the config that they are set.
+exports.ct19 = ct19 = function ct19 (params, callback) {
+	testclearstorage();
+	config = setconfig8();
+	executetest("executethis", {"executethis":"func_b", "preexecute":"func_a", "postexecute":"func_c",
+							"configuration":{
+										        "preexecute": [
+										            {
+										                "dothis": "executeFn",
+										                "tryorder": 0,
+										                "executeorder": 0,
+										                "params": {"alpha":"3"}
+										            }
+										        ],
+										        "midexecute": [
+										            {
+										                "dothis": "executeFn",
+										                "tryorder": 0,
+										                "executeorder": 0,
+										                "params": {"bravo":"3"}
+										            }
+										        ],
+										    	"postexecute": [
+										            {
+										                "dothis": "executeFn",
+										                "tryorder": 0,
+										                "executeorder": 0,
+										                "params": {"charlie":"3"}
+										            }
+										        ]
+										    },
+							 "alpha":"1", "bravo":"1", "charlie":"1"}, "ct19_output", "");
+
+	params = logverify("c_unit_tests","ct19_result","ct19_output","","", {"configuration":{}, "f":"3", "g":"4", "h":"5", "alpha":"1", "bravo":"1", "charlie":"1"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// Here the goal is to see if the config of the left and right conflict, which wins? Ad of now, the right side wins. The params for func_a,b,c are 
+// all set to be 2, but they come out as 4, because that is what pre,mid, and post set them to.
+exports.ct20 = ct20 = function ct20 (params, callback) {
+	testclearstorage();
+	config = setconfig8();
+	executetest("executethis", {"executethis":"func_b", "preexecute":"func_a", "postexecute":"func_c" }, "ct20_output", "");
+
+	params = logverify("c_unit_tests","ct20_result","ct20_output","","",  {"charlie":"4","g":"4","alpha":"4","f":"3","bravo":"4","h":"5"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
@@ -764,6 +889,25 @@ exports.ct1000 = ct1000 = function ct1000 (params, callback) {
     }
 }
 
+// test to see if nested configuration params are making it across to a mock server function
+exports.cict1 = cict1 = function cict1(params, callback) {
+    testclearstorage();
+    config = setconfig2();
+    executetest("executethis", {"executethis":"mock_server", "a":"1", "b":"2", "c":"3"}, "cic_t1_output", "");
+    params = logverify("cic_unit_tests","cic_t1_result","cic_t1_output","","",{"a":"1","b":"2","c":"3","configuration":{"login1":[{"executeorder":0,"tryorder":0,"dothis":"login","params":{}}]}});
+    if (callback instanceof Function) { 
+        callback(params); 
+    } else { 
+        return params; 
+    }
+}
+
+// mock_server resolves to this function
+exports.cic_output = cic_output = function cic_output(params) {
+    alert(JSON.stringify(params));
+    return params;
+}
+
 exports.other_func = other_func = function other_func(params, callback) {
 	params['howtodooverride'] = 'you got your hottodooverwritten';
 	window[params['executethis']] (params, callback);
@@ -771,7 +915,7 @@ exports.other_func = other_func = function other_func(params, callback) {
 }
 
 exports.alertFn1 = alertFn1 = function alertFn1 (params, callback) {
-	alert('ct7 has alerted');
+	// alert('ct7 has alerted');
 	params["ct7"] = "did some alerting";
 	// delete params["configuration"];
     if (callback instanceof Function) { 
@@ -792,12 +936,10 @@ exports.ft1 = ft1 = function ft1 (params, callback) {
     	return params; 
     }
 }
-
 // 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 // 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 // 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-
-// ---------------------- Functions to use in pre, mid and post
+// Functions to use in pre, mid and post
 // to test the flow of parameters through executethis
 exports.func_a = func_a = function func_a (parameters) {
 	console.log('from func_a');
@@ -916,7 +1058,125 @@ exports.async_func_h = async_func_h = function async_func_h (parameters, callbac
 	callback (parameters);
 	// return parameters;
 }
-//--------------------------
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+exports.ag1_setup = ag1_setup = function ag1_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
+    executetest("getwidmaster", {"wid":"sounddto"}, "get_sounddto_result", "");
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+
+// This will test the ability to write a dto to the db and retrieve it
+exports.ag1 = ag1 = function ag1 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag1_setup();
+	params = logverify("alphagetwidmaster_unit_tests","ag1_result","get_sounddto_result","","", {"note":"string","wid":"sounddto","metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+	// return verifysummary("test_results");
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exports.ag2_setup = ag2_setup = function ag2_setup (params, callback) {
+		executetest("addwidmaster",{"wid":"colordto","metadata.method":"colordto","hue":"string"}, "", "");
+		executetest("addwidmaster",{"wid":"color1","hue":"red"}, "", "");
+		executetest("addwidmaster",{"wid":"color2","hue":"blue"}, "", "");
+	    executetest("getwidmaster", {"wid":"color1"}, "get_color1_result", "");	
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+
+// This will test the ability to write a dto to the db, use that dto to write
+// a wid with that dto, and get the results of getting that wid.
+exports.ag2 = ag2 = function ag2 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag2_setup();
+	params = logverify("alpha_unit_tests","ag2_result","get_color1_result","","", {"hue":"red","wid":"color1","metadata.method":"defaultdto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exports.ag3_setup = ag3_setup = function ag3_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
+    executetest("addwidmaster",{"wid":"songdto", "metadata.method":"songdto", "title":"string", "sounddto":"onetomany"}, "", "");
+    executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"songdto", "secondarywid":"sounddto", "relationshiptype":"attributes"}, "", "");
+
+    executetest("addwidmaster",{"wid":"song1",
+    							"metadata.method" : "songdto", 
+    							"title" : "Highway to Hell",  
+    							"sounddto.0.note"	: "A flat",
+    							"sounddto.1.note"	: "B sharp",
+    							"sounddto.2.note"	: "C flat",
+    							}, "", "");
+    executetest("getwidmaster", {"wid":"song1"}, "get_song1_result", "");
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// This is a 2 level test of the dtos...instantiate song1 with a songdto, and some sounddto values
+exports.ag3 = ag3 = function ag3 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag3_setup();
+	params = logverify("alpha_unit_tests","ag3_result","get_song1_result","","", {"title":"Highway to Hell","wid":"song1","metadata.method":"songdto","sounddto.0.note":"A flat","sounddto.0.wid":"1","sounddto.0.metadata.method":"sounddto","sounddto.1.note":"B sharp","sounddto.1.wid":"3","sounddto.1.metadata.method":"sounddto","sounddto.2.note":"C flat","sounddto.2.wid":"5","sounddto.2.metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exports.ag4_setup = ag4_setup = function ag4_setup (params, callback) {
+    executetest("addwidmaster",{"wid":"sounddto","metadata.method":"sounddto","note":"string"}, "", "");
+    executetest("addwidmaster",{"wid":"songdto", "metadata.method":"songdto", "title":"string", "sounddto":"onetomany"}, "", "");
+    executetest("addwidmaster",{"wid":"rel_sound_to_song", "primarywid":"songdto", "secondarywid":"sounddto", "relationshiptype":"attributes"}, "", "");
+
+    executetest("addwidmaster",{"wid":"song1",
+    							"metadata.method" : "songdto", 
+    							"title" : "Highway to Hell",  
+    							"sounddto.0.note"	: "A flat",
+    							"sounddto.1.note"	: "B sharp",
+    							"sounddto.2.note"	: "C flat",
+    							}, "", "");
+    executetest("getwidmaster", {"wid":"song1"}, "get_song1_result", "");
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// This is a 3 level test where song1 will have data from a songdto, that uses a sounddto, and the sounddto will use a measuredto 
+exports.ag4 = ag4 = function ag4 (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	ag4_setup();
+	params = logverify("alpha_unit_tests","ag4_result","get_song1_result","","", {"title":"Highway to Hell","wid":"song1","metadata.method":"songdto","sounddto.0.note":"A flat","sounddto.0.wid":"1","sounddto.0.metadata.method":"sounddto","sounddto.1.note":"B sharp","sounddto.1.wid":"3","sounddto.1.metadata.method":"sounddto","sounddto.2.note":"C flat","sounddto.2.wid":"5","sounddto.2.metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
+}
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
 exports.getwidtest = getwidtest = function getwidtest(params, callback) {
     executetest('getwid', {wid:'test1'});
@@ -987,7 +1247,7 @@ exports.testb_setup = testb_setup = function testb_setup (params, callback) {
 }
 
 exports.testc_setup = testc_setup = function testc_setup (params, callback) {
-		executetest("addwidmaster",{"wid":"colordto","metadata.method":"colordto","hue":"string"}, "", "");
+		// executetest("addwidmaster",{"wid":"colordto","metadata.method":"colordto","hue":"string"}, "", "");
 		executetest("addwidmaster",{"wid":"color1","hue":"red"}, "", "");
     if (callback instanceof Function) { 
     	callback(params); 
@@ -1055,13 +1315,27 @@ exports.testb = testb = function testb (params, callback) {
 	config = setconfig1();
 	testclearstorage();
 	testb_setup();
-	params = logverify("alpha_unit_tests","testb_result","get_sounddto_result","","", {"note":"string","wid":"sounddto","metadata.method":"sounddto"});
+	params = logverify("alphagetwidmaster_unit_tests","testb_result","get_sounddto_result","","", {"note":"string","wid":"sounddto","metadata.method":"sounddto"});
     if (callback instanceof Function) { 
     	callback(params); 
     } else { 
     	return params; 
     }
 	// return verifysummary("test_results");
+}
+// This will test the ability to write a wid to the db and use executegetwid to retrieve it
+// ----this fails...all it returns is {"wid":"color1"}, not the data and method
+exports.testc = testc = function testc (params, callback) {
+	config = setconfig1();
+	testclearstorage();
+	testc_setup();
+	executetest("executegetwid", {"wid":"color1"}, "get_color1_result", "");	
+	params = logverify("alphagetwidmaster_unit_tests","testc_result","testc_result","","", {"hue":"red","wid":"color1","metadata.method":"sounddto"});
+    if (callback instanceof Function) { 
+    	callback(params); 
+    } else { 
+    	return params; 
+    }
 }
 // This will test the ability to write a dto to the db, use that dto to write
 // a wid with that dto, and get the results of getting that wid.
@@ -1075,7 +1349,6 @@ exports.teste = teste = function teste (params, callback) {
     } else { 
     	return params; 
     }
-	// return verifysummary("test_results");
 }
 
 exports.testf = testf = function testf (params, callback) {
@@ -1163,7 +1436,7 @@ exports.testh = testh = function testh () {
 	executetest("addwidmaster", {"this_wid_was_added":abc }, "testh_output", "");
 	params = logverify("unit_tests","testh_result","testh_output","","",{"f":"3","g":"4","h":"5"});
     if (callback instanceof Function) { 
-    	callback(params); 
+    	callback(params); getwidmaster
     } else { 
     	return params; 
     }
@@ -1621,7 +1894,6 @@ exports.setconfig2 = setconfig2 = function setconfig2() {
     configuration.postExecute[2].dothis = 'server';
     configuration.postExecute[2].params = {};
 
-
     configuration.redir_a = [];
     configuration.redir_a[0] = {};
     configuration.redir_a[0].executeorder = 0;
@@ -1636,13 +1908,30 @@ exports.setconfig2 = setconfig2 = function setconfig2() {
     configuration.redir_b[0].dothis = 'func_b';
     configuration.redir_b[0].params = {};
 
-    
     configuration.redir_c = [];
     configuration.redir_c[0] = {};
     configuration.redir_c[0].executeorder = 0;
     configuration.redir_c[0].tryorder = 0;
     configuration.redir_c[0].dothis = 'func_c';
     configuration.redir_c[0].params = {};
+
+    configuration.mock_server = [];
+    configuration.mock_server[0] = {};
+    configuration.mock_server[0].executeorder = 0;
+    configuration.mock_server[0].tryorder = 0;
+    configuration.mock_server[0].dothis = 'cic_output';
+    configuration.mock_server[0].params =   {
+                                                "configuration": {
+                                                    "login1": [
+                                                        {
+                                                            "executeorder": 0,
+                                                            "tryorder": 0,
+                                                            "dothis": "login",
+                                                            "params": {}
+                                                        }
+                                                    ]
+                                                }
+                                            }
 
     return {
         "configuration": configuration
@@ -1956,6 +2245,7 @@ exports.setconfig6 = setconfig6 = function setconfig6() {
     configuration.midExecute[3].tryorder = 0;
     configuration.midExecute[3].dothis = 'server';
     configuration.midExecute[3].params = {};
+
     configuration.postExecute = [];
     configuration.postExecute[0] = {};
     configuration.postExecute[0].executeorder = 0;
@@ -1977,6 +2267,177 @@ exports.setconfig6 = setconfig6 = function setconfig6() {
     configuration.postExecute[2].tryorder = 0;
     configuration.postExecute[2].dothis = 'server';
     configuration.postExecute[2].params = {};
+
+    return {
+        "configuration": configuration
+    }
+}
+
+// This config is to test he executeDefault...does it make it there if executeFn and executeParam do 
+// not exist.  
+exports.setconfig7 = setconfig7 = function setconfig7() {
+    configuration = {};
+	configuration.environment='local';
+
+    configuration.preExecute = [];
+    configuration.preExecute[0] = {};
+    configuration.preExecute[0].executeorder = 0;
+    configuration.preExecute[0].tryorder = 0;
+    configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {'myexfnparam':'hereismyfnparam'};
+    configuration.preExecute[1] = {};
+    configuration.preExecute[1].executeorder = 0;
+    configuration.preExecute[1].tryorder = 0;
+    configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
+    configuration.preExecute[2] = {};
+    configuration.preExecute[2].executeorder = 0;
+    configuration.preExecute[2].tryorder = 0;
+    configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
+    configuration.preExecute[3] = {};
+    configuration.preExecute[3].executeorder = 0;
+    configuration.preExecute[3].tryorder = 0;
+    configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
+
+    configuration.midExecute = [];
+    configuration.midExecute[0] = {};
+    configuration.midExecute[0].executeorder = 0;
+    configuration.midExecute[0].tryorder = 0;
+    configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {};
+    configuration.midExecute[1] = {};
+    configuration.midExecute[1].executeorder = 0;
+    configuration.midExecute[1].tryorder = 0;
+    configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
+    configuration.midExecute[2] = {};
+    configuration.midExecute[2].executeorder = 0;
+    configuration.midExecute[2].tryorder = 0;
+    // configuration.midExecute[2].dothis = 'executeDefault'; // This is replaced with func_b to simulate getting to executeDefault
+    configuration.midExecute[2].dothis = 'func_b';
+    configuration.midExecute[2].params = {'exdef':'param after executefn and executeparam was grabbed'};
+    configuration.midExecute[3] = {};
+    configuration.midExecute[3].executeorder = 0;
+    configuration.midExecute[3].tryorder = 0;
+    configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
+
+    configuration.postExecute = [];
+    configuration.postExecute[0] = {};
+    configuration.postExecute[0].executeorder = 0;
+    configuration.postExecute[0].tryorder = 0;
+    configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {};
+    configuration.postExecute[1] = {};
+    configuration.postExecute[1].executeorder = 0;
+    configuration.postExecute[1].tryorder = 0;
+    configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
+    configuration.postExecute[2] = {};
+    configuration.postExecute[2].executeorder = 0;
+    configuration.postExecute[2].tryorder = 0;
+    configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
+    configuration.postExecute[2] = {};
+    configuration.postExecute[2].executeorder = 0;
+    configuration.postExecute[2].tryorder = 0;
+    configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
+
+    return {
+        "configuration": configuration
+    }
+}
+
+exports.setconfig8 = setconfig8 = function setconfig8() {
+    configuration = {};
+	configuration.environment='local';
+
+    configuration.preExecute = [];
+    configuration.preExecute[0] = {};
+    configuration.preExecute[0].executeorder = 0;
+    configuration.preExecute[0].tryorder = 0;
+    configuration.preExecute[0].dothis = 'executeFn';
+    configuration.preExecute[0].params = {"alpha":"4"};
+    configuration.preExecute[1] = {};
+    configuration.preExecute[1].executeorder = 0;
+    configuration.preExecute[1].tryorder = 0;
+    configuration.preExecute[1].dothis = 'executeParam';
+    configuration.preExecute[1].params = {};
+    configuration.preExecute[2] = {};
+    configuration.preExecute[2].executeorder = 0;
+    configuration.preExecute[2].tryorder = 0;
+    configuration.preExecute[2].dothis = 'executeDefault';
+    configuration.preExecute[2].params = {};
+    configuration.preExecute[3] = {};
+    configuration.preExecute[3].executeorder = 0;
+    configuration.preExecute[3].tryorder = 0;
+    configuration.preExecute[3].dothis = 'server';
+    configuration.preExecute[3].params = {};
+
+    configuration.midExecute = [];
+    configuration.midExecute[0] = {};
+    configuration.midExecute[0].executeorder = 0;
+    configuration.midExecute[0].tryorder = 0;
+    configuration.midExecute[0].dothis = 'executeFn';
+    configuration.midExecute[0].params = {"bravo":"4"};
+    configuration.midExecute[1] = {};
+    configuration.midExecute[1].executeorder = 0;
+    configuration.midExecute[1].tryorder = 0;
+    configuration.midExecute[1].dothis = 'executeParam';
+    configuration.midExecute[1].params = {};
+    configuration.midExecute[2] = {};
+    configuration.midExecute[2].executeorder = 0;
+    configuration.midExecute[2].tryorder = 0;
+    configuration.midExecute[2].dothis = 'executeDefault';
+    configuration.midExecute[2].params = {};
+    configuration.midExecute[3] = {};
+    configuration.midExecute[3].executeorder = 0;
+    configuration.midExecute[3].tryorder = 0;
+    configuration.midExecute[3].dothis = 'server';
+    configuration.midExecute[3].params = {};
+
+    configuration.postExecute = [];
+    configuration.postExecute[0] = {};
+    configuration.postExecute[0].executeorder = 0;
+    configuration.postExecute[0].tryorder = 0;
+    configuration.postExecute[0].dothis = 'executeFn';
+    configuration.postExecute[0].params = {"charlie":"4"};
+    configuration.postExecute[1] = {};
+    configuration.postExecute[1].executeorder = 0;
+    configuration.postExecute[1].tryorder = 0;
+    configuration.postExecute[1].dothis = 'executeParam';
+    configuration.postExecute[1].params = {};
+    configuration.postExecute[2] = {};
+    configuration.postExecute[2].executeorder = 0;
+    configuration.postExecute[2].tryorder = 0;
+    configuration.postExecute[2].dothis = 'executeDefault';
+    configuration.postExecute[2].params = {};
+    configuration.postExecute[2] = {};
+    configuration.postExecute[2].executeorder = 0;
+    configuration.postExecute[2].tryorder = 0;
+    configuration.postExecute[2].dothis = 'server';
+    configuration.postExecute[2].params = {};
+
+    configuration.func_a = [];
+    configuration.func_a[0] = {};
+    configuration.func_a[0].order = 0;
+    configuration.func_a[0].dothis = 'func_a';
+    configuration.func_a[0].params = {"alpha":"2"};
+
+    configuration.func_b = [];
+    configuration.func_b[0] = {};
+    configuration.func_b[0].order = 0;
+    configuration.func_b[0].dothis = 'func_b';
+    configuration.func_b[0].params = {"bravo":"2"};
+
+    configuration.func_c = [];
+    configuration.func_c[0] = {};
+    configuration.func_c[0].order = 0;
+    configuration.func_c[0].dothis = 'func_c';
+    configuration.func_c[0].params = {"charlie":"2"};
 
     return {
         "configuration": configuration

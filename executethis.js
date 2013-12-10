@@ -237,7 +237,7 @@
             for (var i = 0; i < config0[configtarget].length; i++) {
                 //try a concat
                 if((params !== undefined) && (config0[configtarget][i].params !== undefined)) {
-                    config0[configtarget][i].params = jsonConcat(config0[configtarget][i].params, params); // concatenate with other pararms
+                    config0[configtarget][i].params = jsonConcat(params, config0[configtarget][i].params); // concatenate with other pararms
                 } 
                  //config0[configtarget][i].params= params; ** took out and put above, we should not change 'params'
             }
